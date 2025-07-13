@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <title>وليد - مطور</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo&display=swap');
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 0 40px rgba(0, 191, 255, 0.6);
+            max-width: 500px;
+            width: 90%;
+        }
+        .avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            background: url('walid.png') no-repeat center center;
+            background-size: cover;
+            border: 5px solid #00bfff;
+            box-shadow: 0 0 20px #00bfff;
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.8rem;
+            color: #00bfff;
+        }
+        p.title {
+            margin: 10px 0 30px;
+            font-size: 1.3rem;
+            color: #aad4f5;
+        }
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .btn {
+            background-color: #00bfff;
+            color: #fff;
+            padding: 12px 20px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            border-radius: 10px;
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #ff0000; /* أحمر عند التمرير */
+        }
+        a.contact-link {
+            display: inline-block;
+            color: #00bfff;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+        a.contact-link:hover {
+            color: #66d0ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="avatar"></div>
+        <h1>IBIDARE WALID</h1>
+        <p class="title">développeur informatique</p>
+
+        <div class="buttons">
+            <a class="btn" href="https://www.facebook.com/share/1Z4EKZF2ep/" target="_blank">Facebook</a>
+            <a class="btn" href="https://www.tiktok.com/@ibidare" target="_blank">TikTok</a>
+            <a class="btn" href="https://wa.me/212600000000" target="_blank">WhatsApp</a>
+        </div>
+
+        <div>
+            <a class="contact-link" href="mailto:walid.ibidare@gmail.com">📧 walid.ibidare@gmail.com</a>
+            <a class="contact-link" href="https://github.com/yourusername" target="_blank">🐙 GitHub</a>
+        </div>
+    </div>
+</body>
+</html>
