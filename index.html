@@ -1,180 +1,221 @@
-<!DOCTYPE html><html lang="ar" dir="rtl">
+<!DOCTYPE html>
+<html lang="fr">
 <head>
-    <meta charset="UTF-8" />
-    <title>IBIDAR WALID</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Orbitron:wght@500;700&display=swap');body {
-        margin: 0;
-        padding: 0;
-        font-family: 'Cairo', sans-serif;
-        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-        overflow: hidden;
-        color: #fff;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        text-align: center;
-        position: relative;
+  <meta charset="UTF-8" />
+  <title>IBIDAR WALID</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Orbitron:wght@500;700&display=swap');
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Cairo', sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      overflow: hidden;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      position: relative;
     }
 
     .matrix {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 0;
-        background: black;
-        opacity: 0.15;
-        pointer-events: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      background: black;
+      opacity: 0.15;
+      pointer-events: none;
     }
 
     canvas {
-        display: block;
+      display: block;
     }
 
     .container {
-        position: relative;
-        background: rgba(255, 255, 255, 0.05);
-        padding: 40px;
-        border-radius: 20px;
-        box-shadow: 0 0 40px rgba(0, 191, 255, 0.4);
-        max-width: 500px;
-        width: 90%;
-        z-index: 1;
-        backdrop-filter: blur(10px);
+      position: relative;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 0 40px rgba(0, 191, 255, 0.4);
+      max-width: 500px;
+      width: 90%;
+      z-index: 1;
+      backdrop-filter: blur(10px);
     }
 
     .avatar {
-        width: 150px;
-        height: 150px;
-        border-radius: 50%;
-        margin: 0 auto 20px;
-        background: url('walid.png') no-repeat center center;
-        background-size: cover;
-        border: 5px solid #00bfff;
-        box-shadow: 0 0 30px #00bfff;
-        animation: pulse 2s infinite;
+      position: relative;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      margin: 0 auto 20px;
+      border: 5px solid #00bfff;
+      box-shadow: 0 0 30px #00bfff;
+      overflow: hidden;
     }
 
-    @keyframes pulse {
-        0% { box-shadow: 0 0 30px #00bfff; }
-        50% { box-shadow: 0 0 60px #00bfff; }
-        100% { box-shadow: 0 0 30px #00bfff; }
+    .img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      animation: fadeLoop 8s infinite ease-in-out;
+    }
+
+    .img1 { animation-delay: 0s; z-index: 4; }
+    .img2 { animation-delay: 0s; z-index: 3; }
+    .img3 { animation-delay: 2s; z-index: 2; }
+    .img4 { animation-delay: 3s; z-index: 1; }
+
+    @keyframes fadeLoop {
+      0%   { opacity: 0; }
+      10%  { opacity: 1; }
+      40%  { opacity: 1; }
+      50%  { opacity: 0; }
+      100% { opacity: 1; }
     }
 
     h1 {
-        margin: 0;
-        font-size: 2.5rem;
-        background: linear-gradient(90deg, #00bfff, #8a2be2);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        font-family: 'Orbitron', sans-serif;
+      margin: 0;
+      font-size: 2.5rem;
+      background: linear-gradient(90deg, #00bfff, #8a2be2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-family: 'Orbitron', sans-serif;
     }
 
     p.title {
-        margin: 10px 0 30px;
-        font-size: 1.3rem;
-        color: #aad4f5;
+      margin: 10px 0 30px;
+      font-size: 1.3rem;
+      color: #aad4f5;
     }
 
     .buttons {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        margin-bottom: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: 30px;
     }
 
     .btn {
-        background: transparent;
-        color: #00bfff;
-        border: 2px solid #00bfff;
-        padding: 12px 20px;
-        text-decoration: none;
-        font-size: 1.1rem;
-        border-radius: 50px;
-        transition: all 0.3s ease;
-        font-weight: bold;
+      background: transparent;
+      color: #00bfff;
+      border: 2px solid #00bfff;
+      padding: 12px 20px;
+      text-decoration: none;
+      font-size: 1.1rem;
+      border-radius: 50px;
+      transition: all 0.3s ease;
+      font-weight: bold;
     }
 
-    .btn:hover {
-        background: #00bfff;
-        color: #fff;
-        transform: scale(1.05);
-    }
+.btn {
+  background: transparent;
+  color: #00bfff;
+  border: 2px solid #00bfff;
+  padding: 12px 20px;
+  text-decoration: none;
+  font-size: 1.1rem;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  font-weight: bold;
+  box-shadow: 0 0 15px 5px rgba(255, 0, 0, 0.7); /* توهج أحمر دائم */
+}
+.btn:hover {
+  background: rgba(255, 0, 0, 0.8);
+  color: #fff;
+  transform: scale(1.05);
+}
 
     a.contact-link {
-        display: inline-block;
-        color: #00bfff;
-        text-decoration: none;
-        font-weight: bold;
-        margin: 0 10px;
-        transition: color 0.3s ease;
+      display: inline-block;
+      color: #00bfff;
+      text-decoration: none;
+      font-weight: bold;
+      margin: 0 10px;
+      transition: color 0.3s ease;
     }
 
     a.contact-link:hover {
-        color: #66d0ff;
+      color: #66d0ff;
     }
-</style>
-
+  </style>
 </head>
 <body>
-    <canvas id="matrix"></canvas>
-    <div class="container">
-        <div class="avatar"></div>
-        <h1>IBIDARE WALID 👨‍💻</h1>
-        <p class="title">🚀 Développeur Informatique</p><div class="buttons">
-        <a class="btn" href="https://www.facebook.com/share/1Z4EKZF2ep/" target="_blank">📘 Facebook</a>
-        <a class="btn" href="https://www.tiktok.com/@ibidare" target="_blank">🎵 TikTok</a>
-        <a class="btn" href="https://wa.me/212724144983" target="_blank">💬 WhatsApp</a>
+
+  <canvas id="matrix" class="matrix"></canvas>
+
+  <div class="container">
+    <div class="avatar">
+      <img src="walid.png" class="img img1" />
+      <img src="2.jpg" class="img img2" />
+      <img src="3.jpg" class="img img3" />
+      <img src="4.Jpg" class="img img4" />
+    </div>
+    <h1>IBIDAR WALID 👨‍💻</h1>
+    <p class="title">🚀 Développeur Informatique</p>
+
+    <div class="buttons">
+      <a class="btn" href="https://www.facebook.com/share/1Z4EKZF2ep/" target="_blank">📘 Facebook</a>
+      <a class="btn" href="https://www.tiktok.com/@ibidare" target="_blank">🎵 TikTok</a>
+      <a class="btn" href="https://wa.me/212724144983" target="_blank">💬 WhatsApp</a>
     </div>
 
     <div>
-        <a class="contact-link" href="mailto:walid.ibidare@gmail.com">📧 walid.ibidare@gmail.com</a>
-        <a class="contact-link" href="https://github.com/yourusername" target="_blank">🐙 GitHub</a>
+      <a class="contact-link" href="mailto:walid.ibidare@gmail.com">📧 walid.ibidare@gmail.com</a>
+      <a class="contact-link" href="https://github.com/yourusername" target="_blank">🐙 GitHub</a>
     </div>
-</div>
+  </div>
 
-<script>
-    // Matrix rain background effect
+  <script>
+    // كود بسيط جدا لماتريكس (الكتابة التي تنزل)
     const canvas = document.getElementById('matrix');
     const ctx = canvas.getContext('2d');
 
-    canvas.height = window.innerHeight;
-    canvas.width = window.innerWidth;
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
 
-    const matrix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    const fontSize = 16;
-    const columns = canvas.width / fontSize;
+    const letters = 'abcdefghijklmnopqrstuvwxyz0123456789@#$%^&()&^%';
+    const fontSize = 14;
+    const columns = Math.floor(width / fontSize);
+
     const drops = [];
-
     for (let x = 0; x < columns; x++) drops[x] = 1;
 
     function draw() {
-        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+      ctx.fillRect(0, 0, width, height);
 
-        ctx.fillStyle = "#00bfff";
-        ctx.font = fontSize + "px monospace";
+      ctx.fillStyle = '#0F0';
+      ctx.font = fontSize + 'px monospace';
 
-        for (let i = 0; i < drops.length; i++) {
-            const text = matrix.charAt(Math.floor(Math.random() * matrix.length));
-            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters.charAt(Math.floor(Math.random() * letters.length));
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
 
-            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-            drops[i]++;
-        }
+        if (drops[i] * fontSize > height && Math.random() > 0.975) drops[i] = 0;
+        drops[i]++;
+      }
     }
 
-    setInterval(draw, 33);
+    setInterval(draw, 35);
 
     window.addEventListener('resize', () => {
-        canvas.height = window.innerHeight;
-        canvas.width = window.innerWidth;
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
     });
-</script>
+  </script>
 
 </body>
 </html>
