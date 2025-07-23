@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>IBIDAR WALID - Hacker Style</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Portfolio de Walid Ibidar - Développeur Informatique au style hacker avec effets Matrix et animations néon." />
+  <meta name="description" content="Portfolio de Walid Ibidar - Style Hacker Matrix" />
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
 
@@ -15,69 +15,80 @@
 
     body {
       background: black;
-      color: #00ff00;
       font-family: 'Share Tech Mono', monospace;
+      color: #00ff00;
       overflow: hidden;
       height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      flex-direction: column;
-      text-align: center;
+      user-select: none;
       position: relative;
-      transition: background-color 0.5s ease, color 0.5s ease;
+    }
+
+    /* Matrix background canvas */
+    #matrix {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      z-index: 0;
+      background: black;
     }
 
     /* Loading Screen */
     #loadingScreen {
       position: fixed;
-      top: 0; left: 0; 
+      top: 0; left: 0;
       width: 100vw; height: 100vh;
       background: black;
       color: #00ff00;
-      font-family: 'Share Tech Mono', monospace;
+      font-size: 4rem;
+      letter-spacing: 0.3em;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 3rem;
+      z-index: 20;
+      text-shadow:
+        0 0 5px #0f0,
+        0 0 10px #0f0,
+        0 0 20px #0f0,
+        0 0 40px #0f0;
+      animation: flicker 1.5s infinite alternate;
       user-select: none;
-      z-index: 10;
+      font-family: 'Share Tech Mono', monospace;
     }
 
-    /* Matrix Canvas full screen */
-    #matrix {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 0;
-      background: black;
+    @keyframes flicker {
+      0% {opacity: 1;}
+      100% {opacity: 0.5;}
     }
 
-    /* Container */
+    /* Main container with profile info */
     .container {
       position: relative;
-      z-index: 2;
-      background: rgba(0, 0, 0, 0.85);
+      z-index: 10;
+      background: rgba(0, 20, 0, 0.85);
       border: 2px solid #00ff00;
       border-radius: 15px;
-      padding: 30px 40px;
-      max-width: 400px;
+      padding: 30px 30px 40px 30px;
+      max-width: 380px;
       width: 90vw;
-      box-shadow: 0 0 15px #00ff00;
-      user-select: none;
-      display: none; /* hidden initially */
+      box-shadow:
+        0 0 15px #00ff00,
+        0 0 40px #00ff00;
+      text-align: center;
+      display: none;
     }
 
-    /* Avatar */
+    /* Avatar circle with images */
     .avatar {
       width: 140px;
       height: 140px;
-      margin: 0 auto 20px;
-      border: 3px solid #00ff00;
+      margin: 0 auto 25px;
       border-radius: 50%;
-      box-shadow: 0 0 25px #00ff00;
       overflow: hidden;
+      border: 3px solid #00ff00;
+      box-shadow: 0 0 15px #00ff00;
       position: relative;
     }
 
@@ -85,117 +96,162 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      position: absolute;
       border-radius: 50%;
-      display: block;
+      opacity: 0;
+      animation: fadeLoop 8s infinite ease-in-out;
     }
 
-    /* Typing effect for title */
+    /* Only one image here to keep it simple */
+    .avatar img.img1 { opacity: 1; animation-delay: 0s; }
+
+    @keyframes fadeLoop {
+      0%, 10% { opacity: 1; }
+      25%, 100% { opacity: 0; }
+    }
+
+    /* Typing effect on the name */
     .typing {
-      font-size: 2.4rem;
+      font-size: 2.5rem;
       font-weight: 700;
-      letter-spacing: 2px;
+      color: #00ff00;
+      letter-spacing: 0.1em;
       overflow: hidden;
       white-space: nowrap;
       border-right: 4px solid #00ff00;
       width: 16ch;
-      animation: typing 3.5s steps(16), blink 0.75s step-end infinite;
-      margin-bottom: 10px;
+      margin: 0 auto 15px;
+      animation: typing 3.5s steps(16), blink 0.7s step-end infinite;
+      user-select: none;
     }
+
     @keyframes typing {
-      from { width: 0 }
-      to { width: 16ch }
+      from { width: 0; }
+      to { width: 16ch; }
     }
+
     @keyframes blink {
-      50% { border-color: transparent }
-      100% { border-color: #00ff00 }
+      50% { border-color: transparent; }
+      100% { border-color: #00ff00; }
     }
 
     .subtitle {
-      color: #00cc00;
       font-size: 1.1rem;
       margin-bottom: 30px;
       text-transform: uppercase;
-      letter-spacing: 4px;
+      letter-spacing: 0.2em;
+      color: #0f0;
+      text-shadow: 0 0 5px #0f0;
     }
 
-    /* Buttons */
+    /* Buttons container */
     .buttons {
       display: flex;
       flex-direction: column;
       gap: 15px;
       margin-bottom: 20px;
+      user-select: none;
     }
 
+    /* Button style */
     .btn {
       background: transparent;
       border: 2px solid #00ff00;
       color: #00ff00;
-      padding: 12px 20px;
-      font-size: 1.1rem;
-      font-weight: bold;
+      padding: 12px 25px;
+      font-size: 1.2rem;
+      font-weight: 700;
       border-radius: 50px;
       cursor: pointer;
-      text-decoration: none;
+      box-shadow:
+        0 0 10px #00ff00,
+        inset 0 0 10px #00ff00;
       transition: all 0.3s ease;
-      box-shadow: 0 0 10px #00ff00;
+      text-decoration: none;
       user-select: none;
+      position: relative;
+      overflow: hidden;
     }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(120deg, transparent, #00ff00, transparent);
+      transition: all 0.5s ease;
+      z-index: 0;
+    }
+
+    .btn:hover::before {
+      left: 100%;
+    }
+
     .btn:hover {
       background: #00ff00;
       color: black;
-      box-shadow: 0 0 20px #00ff00;
+      box-shadow:
+        0 0 20px #00ff00,
+        inset 0 0 30px #00ff00;
       transform: scale(1.1);
     }
 
-    /* Contact links */
+    /* Contact links style */
     .contacts {
-      margin-top: 10px;
+      color: #00ff00;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      font-weight: 700;
+      font-size: 1rem;
+      user-select: none;
     }
+
     .contact-link {
       color: #00ff00;
       text-decoration: none;
-      font-weight: bold;
-      margin: 0 12px;
       transition: color 0.3s ease;
       user-select: none;
     }
+
     .contact-link:hover {
       color: #66ff66;
       text-shadow: 0 0 8px #66ff66;
     }
+
   </style>
 </head>
 <body>
 
-  <div id="loadingScreen" aria-live="assertive" aria-label="Chargement hacker style">
-    010101
-  </div>
-
   <canvas id="matrix"></canvas>
 
-  <div class="container" role="main" aria-hidden="true" tabindex="-1">
-    <div class="avatar" aria-label="Avatar de Walid Ibidar">
-      <img src="walid.png" alt="Photo de Walid Ibidar" />
+  <!-- Loading screen with hacker style 010101 -->
+  <div id="loadingScreen" aria-live="polite" aria-label="Chargement du profil hacker">010101</div>
+
+  <!-- Main Profile container hidden at first -->
+  <div class="container" role="main" aria-label="Profil de Walid Ibidar">
+    <div class="avatar" aria-label="Photo de Walid Ibidar">
+      <img src="walid.png" alt="Photo de Walid Ibidar" class="img1" />
     </div>
 
-    <h1 class="typing" aria-label="IBIDAR WALID, développeur informatique">IBIDAR WALID 👨‍💻</h1>
-    <p class="subtitle">🚀 Développeur Informatique</p>
+    <h1 class="typing" aria-label="Nom: IBIDAR WALID">IBIDAR WALID</h1>
+    <p class="subtitle">Développeur Informatique</p>
 
-    <div class="buttons" role="navigation" aria-label="Liens réseaux sociaux">
+    <div class="buttons" role="navigation" aria-label="Liens des réseaux sociaux">
       <a href="https://www.facebook.com/share/1Z4EKZF2ep/" target="_blank" rel="noopener" class="btn" aria-label="Facebook de Walid">📘 Facebook</a>
       <a href="https://www.tiktok.com/@ibidare" target="_blank" rel="noopener" class="btn" aria-label="TikTok de Walid">🎵 TikTok</a>
       <a href="https://wa.me/212XXXXXXXXX" target="_blank" rel="noopener" class="btn" aria-label="WhatsApp de Walid">💬 WhatsApp</a>
-      <button id="hackBtn" class="btn" aria-label="Bouton Hack Me">🛠️ Hack Me</button>
+      <button class="btn" id="hackBtn" aria-label="Bouton Hack Me">💻 Hack Me</button>
     </div>
 
-    <div class="contacts" aria-label="Contact">
+    <div class="contacts" aria-label="Contacts">
       <a href="mailto:walid.ibidare@gmail.com" class="contact-link" aria-label="Envoyer un email à Walid">📧 walid.ibidare@gmail.com</a>
       <a href="https://github.com/yourusername" target="_blank" rel="noopener" class="contact-link" aria-label="GitHub de Walid">🐙 GitHub</a>
     </div>
   </div>
 
   <script>
-    // Matrix Effect
+    // Matrix effect on canvas
     const canvas = document.getElementById('matrix');
     const ctx = canvas.getContext('2d');
 
@@ -226,45 +282,48 @@
       }
     }
 
-    setInterval(draw, 40);
+    let matrixInterval = setInterval(draw, 40);
 
     window.addEventListener('resize', () => {
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
     });
 
-    // Loading Screen logic
-    window.onload = () => {
-      setTimeout(() => {
-        document.getElementById('loadingScreen').style.display = 'none';
-        const container = document.querySelector('.container');
-        container.style.display = 'block';
-        container.setAttribute('aria-hidden', 'false');
-        container.focus();
-      }, 1500); // 1.5 secondes seulement
-    }
+    // Loading screen with 010101 and short delay
+    const loadingScreen = document.getElementById('loadingScreen');
+    const container = document.querySelector('.container');
 
-    // Hack Me button effect
+    // Show loading for 2.5 seconds then show profile
+    setTimeout(() => {
+      loadingScreen.style.display = 'none';
+      container.style.display = 'block';
+    }, 2500);
+
+    // "Hack Me" button functionality - toggles colors & text glitch effect
     const hackBtn = document.getElementById('hackBtn');
     hackBtn.addEventListener('click', () => {
-      const body = document.body;
-      // Toggle random colors fast for 3 seconds
-      let count = 0;
-      const interval = setInterval(() => {
-        const r = Math.floor(Math.random() * 256);
-        const g = Math.floor(Math.random() * 256);
-        const b = Math.floor(Math.random() * 256);
-        body.style.backgroundColor = `rgb(${r},${g},${b})`;
-        body.style.color = `rgb(${255 - r},${255 - g},${255 - b})`;
-        count++;
-        if (count > 30) { // ~3 sec (30 * 100ms)
-          clearInterval(interval);
-          body.style.backgroundColor = 'black';
-          body.style.color = '#00ff00';
-        }
-      }, 100);
-    });
-  </script>
+      alert("🚨 Alerte Hacker! Ceci est une blague! 🚨");
 
+      // Flash background green-black glitch
+      let count = 0;
+      const maxFlashes = 6;
+      const interval = setInterval(() => {
+        if(count % 2 === 0) {
+          document.body.style.backgroundColor = '#00ff00';
+          document.body.style.color = '#000';
+        } else {
+          document.body.style.backgroundColor = '#000';
+          document.body.style.color = '#00ff00';
+        }
+        count++;
+        if(count > maxFlashes) {
+          clearInterval(interval);
+          document.body.style.backgroundColor = '#000';
+          document.body.style.color = '#00ff00';
+        }
+      }, 150);
+    });
+
+  </script>
 </body>
 </html>
