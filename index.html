@@ -2,164 +2,187 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>IBIDAR WALID</title>
+  <title>IBIDAR WALID - Hacker Style</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Portfolio de Walid Ibidar - Développeur Informatique au style hacker avec effets Matrix et animations néon." />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Orbitron:wght@500;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+    /* Reset */
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
 
     body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Cairo', sans-serif;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      color: #fff;
+      background: black;
+      color: #00ff00;
+      font-family: 'Share Tech Mono', monospace;
+      overflow: hidden;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      flex-direction: column;
       text-align: center;
       position: relative;
-      overflow: hidden;
     }
 
-    .matrix {
+    /* Matrix Canvas full screen */
+    #matrix {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
       z-index: 0;
-      background: transparent;
-      opacity: 0.15;
-      pointer-events: none;
+      background: black;
     }
 
+    /* Container */
     .container {
       position: relative;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 40px;
-      border-radius: 20px;
-      box-shadow: 0 0 40px rgba(0, 191, 255, 0.4);
-      max-width: 500px;
-      width: 90%;
-      z-index: 1;
-      backdrop-filter: blur(10px);
+      z-index: 2;
+      background: rgba(0, 0, 0, 0.85);
+      border: 2px solid #00ff00;
+      border-radius: 15px;
+      padding: 30px 40px;
+      max-width: 400px;
+      width: 90vw;
+      box-shadow: 0 0 15px #00ff00;
+      user-select: none;
     }
 
+    /* Avatar */
     .avatar {
-      position: relative;
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
+      width: 140px;
+      height: 140px;
       margin: 0 auto 20px;
-      border: 5px solid #00bfff;
-      box-shadow: 0 0 30px #00bfff;
+      border: 3px solid #00ff00;
+      border-radius: 50%;
+      box-shadow: 0 0 25px #00ff00;
       overflow: hidden;
+      position: relative;
     }
 
-    .img {
-      position: absolute;
+    .avatar img {
       width: 100%;
       height: 100%;
-      border-radius: 50%;
       object-fit: cover;
-      top: 0;
-      left: 0;
+      position: absolute;
+      border-radius: 50%;
       opacity: 0;
       animation: fadeLoop 8s infinite ease-in-out;
     }
-
-    .img1 { animation-delay: 0s; z-index: 4; }
-    .img2 { animation-delay: 2s; z-index: 3; }
-    .img3 { animation-delay: 4s; z-index: 2; }
-    .img4 { animation-delay: 6s; z-index: 1; }
+    .avatar img.img1 { animation-delay: 0s; opacity: 1; }
+    .avatar img.img2 { animation-delay: 2s; }
+    .avatar img.img3 { animation-delay: 4s; }
+    .avatar img.img4 { animation-delay: 6s; }
 
     @keyframes fadeLoop {
-      0%   { opacity: 0; }
-      10%  { opacity: 1; }
-      40%  { opacity: 1; }
-      50%  { opacity: 0; }
-      100% { opacity: 0; }
+      0%, 10% { opacity: 1; }
+      25%, 100% { opacity: 0; }
     }
 
-    h1 {
-      margin: 0;
-      font-size: 2.5rem;
-      background: linear-gradient(90deg, #00bfff, #8a2be2);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      font-family: 'Orbitron', sans-serif;
+    /* Typing effect for title */
+    .typing {
+      font-size: 2.4rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      overflow: hidden; /* Ensures the content is not revealed until the animation */
+      white-space: nowrap; /* Keeps the content on a single line */
+      border-right: 4px solid #00ff00; /* The typewriter cursor */
+      width: 16ch; /* Adjust to length of text */
+      animation: typing 3.5s steps(16), blink 0.75s step-end infinite;
+      margin-bottom: 10px;
+    }
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 16ch }
+    }
+    @keyframes blink {
+      50% { border-color: transparent }
+      100% { border-color: #00ff00 }
     }
 
-    p.title {
-      margin: 10px 0 30px;
-      font-size: 1.3rem;
-      color: #aad4f5;
+    .subtitle {
+      color: #00cc00;
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+      text-transform: uppercase;
+      letter-spacing: 4px;
     }
 
+    /* Buttons */
     .buttons {
       display: flex;
       flex-direction: column;
       gap: 15px;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
     }
 
     .btn {
       background: transparent;
-      color: #00bfff;
-      border: 2px solid #00bfff;
+      border: 2px solid #00ff00;
+      color: #00ff00;
       padding: 12px 20px;
-      text-decoration: none;
       font-size: 1.1rem;
-      border-radius: 50px;
-      transition: all 0.3s ease;
       font-weight: bold;
-      box-shadow: 0 0 15px 5px rgba(255, 0, 0, 0.7);
+      border-radius: 50px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px #00ff00;
+      user-select: none;
     }
-
     .btn:hover {
-      background: rgba(255, 0, 0, 0.8);
-      color: #fff;
-      transform: scale(1.05);
+      background: #00ff00;
+      color: black;
+      box-shadow: 0 0 20px #00ff00;
+      transform: scale(1.1);
     }
 
-    a.contact-link {
-      display: inline-block;
-      color: #00bfff;
+    /* Contact links */
+    .contacts {
+      margin-top: 10px;
+    }
+    .contact-link {
+      color: #00ff00;
       text-decoration: none;
       font-weight: bold;
-      margin: 0 10px;
+      margin: 0 12px;
       transition: color 0.3s ease;
+      user-select: none;
+    }
+    .contact-link:hover {
+      color: #66ff66;
+      text-shadow: 0 0 8px #66ff66;
     }
 
-    a.contact-link:hover {
-      color: #66d0ff;
-    }
   </style>
 </head>
 <body>
 
-  <canvas id="matrix" class="matrix"></canvas>
+  <canvas id="matrix"></canvas>
 
-  <div class="container">
-    <div class="avatar">
-      <img src="walid.png" class="img img1" alt="Walid 1"/>
-      <img src="2.jpg" class="img img2" alt="Walid 2"/>
-      <img src="3.jpg" class="img img3" alt="Walid 3"/>
-      <img src="4.jpg" class="img img4" alt="Walid 4"/>
-    </div>
-    <h1>IBIDAR WALID 👨‍💻</h1>
-    <p class="title">🚀 Développeur Informatique</p>
-
-    <div class="buttons">
-      <a class="btn" href="https://www.facebook.com/share/1Z4EKZF2ep/" target="_blank">📘 Facebook</a>
-      <a class="btn" href="https://www.tiktok.com/@ibidare" target="_blank">🎵 TikTok</a>
-      <a class="btn" href="https://wa.me/212XXXXXXXXX" target="_blank">💬 WhatsApp</a>
+  <div class="container" role="main">
+    <div class="avatar" aria-label="Avatar de Walid Ibidar">
+      <img src="walid.png" class="img1" alt="Walid photo 1" />
+      <img src="2.jpg" class="img2" alt="Walid photo 2" />
+      <img src="3.jpg" class="img3" alt="Walid photo 3" />
+      <img src="4.jpg" class="img4" alt="Walid photo 4" />
     </div>
 
-    <div>
-      <a class="contact-link" href="mailto:walid.ibidare@gmail.com">📧 walid.ibidare@gmail.com</a>
-      <a class="contact-link" href="https://github.com/yourusername" target="_blank">🐙 GitHub</a>
+    <h1 class="typing" aria-label="IBIDAR WALID, développeur informatique">IBIDAR WALID 👨‍💻</h1>
+    <p class="subtitle">🚀 Développeur Informatique</p>
+
+    <div class="buttons" role="navigation" aria-label="Liens réseaux sociaux">
+      <a href="https://www.facebook.com/share/1Z4EKZF2ep/" target="_blank" rel="noopener" class="btn" aria-label="Facebook de Walid">📘 Facebook</a>
+      <a href="https://www.tiktok.com/@ibidare" target="_blank" rel="noopener" class="btn" aria-label="TikTok de Walid">🎵 TikTok</a>
+      <a href="https://wa.me/212XXXXXXXXX" target="_blank" rel="noopener" class="btn" aria-label="WhatsApp de Walid">💬 WhatsApp</a>
+    </div>
+
+    <div class="contacts" aria-label="Contact">
+      <a href="mailto:walid.ibidare@gmail.com" class="contact-link" aria-label="Envoyer un email à Walid">📧 walid.ibidare@gmail.com</a>
+      <a href="https://github.com/yourusername" target="_blank" rel="noopener" class="contact-link" aria-label="GitHub de Walid">🐙 GitHub</a>
     </div>
   </div>
 
@@ -170,31 +193,31 @@
     let width = canvas.width = window.innerWidth;
     let height = canvas.height = window.innerHeight;
 
-    const letters = 'abcdefghijklmnopqrstuvwxyz0123456789@#$%^&()&^%';
-    const fontSize = 14;
+    const letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()-+=<>?';
+    const fontSize = 16;
     const columns = Math.floor(width / fontSize);
 
-    const drops = Array(columns).fill(1);
+    const drops = new Array(columns).fill(1);
 
     function draw() {
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
       ctx.fillRect(0, 0, width, height);
 
-      ctx.fillStyle = '#0F0';
+      ctx.fillStyle = '#00ff00';
       ctx.font = fontSize + 'px monospace';
 
-      drops.forEach((y, i) => {
+      for (let i = 0; i < drops.length; i++) {
         const text = letters.charAt(Math.floor(Math.random() * letters.length));
-        ctx.fillText(text, i * fontSize, y * fontSize);
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
 
-        if (y * fontSize > height && Math.random() > 0.975) {
+        if (drops[i] * fontSize > height && Math.random() > 0.975) {
           drops[i] = 0;
         }
         drops[i]++;
-      });
+      }
     }
 
-    setInterval(draw, 35);
+    setInterval(draw, 40);
 
     window.addEventListener('resize', () => {
       width = canvas.width = window.innerWidth;
