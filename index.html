@@ -25,6 +25,23 @@
       flex-direction: column;
       text-align: center;
       position: relative;
+      transition: background-color 0.5s ease, color 0.5s ease;
+    }
+
+    /* Loading Screen */
+    #loadingScreen {
+      position: fixed;
+      top: 0; left: 0; 
+      width: 100vw; height: 100vh;
+      background: black;
+      color: #00ff00;
+      font-family: 'Share Tech Mono', monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 3rem;
+      user-select: none;
+      z-index: 10;
     }
 
     /* Matrix Canvas full screen */
@@ -35,36 +52,6 @@
       height: 100vh;
       z-index: 0;
       background: black;
-    }
-
-    /* شاشة تحميل */
-    #loadingScreen {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background: black;
-      color: #00ff00;
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 1.8rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      white-space: nowrap;
-      overflow: hidden;
-      border-right: 2px solid #00ff00;
-      width: 22ch; /* 22 chars width for typing effect */
-      animation: typing 2.5s steps(22) forwards, blink 1s step-end infinite;
-      user-select: none;
-      z-index: 10;
-    }
-
-    @keyframes typing {
-      from { width: 0 }
-      to { width: 22ch }
-    }
-    @keyframes blink {
-      50% { border-color: transparent; }
-      100% { border-color: #00ff00; }
     }
 
     /* Container */
@@ -79,10 +66,10 @@
       width: 90vw;
       box-shadow: 0 0 15px #00ff00;
       user-select: none;
-      display: none; /* نخليها مخفية حتى تكمّل التحميل */
+      display: none; /* hidden initially */
     }
 
-    /* Avatar دائرة */
+    /* Avatar */
     .avatar {
       width: 140px;
       height: 140px;
@@ -90,30 +77,16 @@
       border: 3px solid #00ff00;
       border-radius: 50%;
       box-shadow: 0 0 25px #00ff00;
-      overflow: hidden; /* ضروري باش الصور ما تخرجش من الدائرة */
+      overflow: hidden;
       position: relative;
     }
 
     .avatar img {
-      position: absolute;
-      top: 50%;
-      left: 50%;
       width: 100%;
       height: 100%;
       object-fit: cover;
       border-radius: 50%;
-      transform: translate(-50%, -50%);
-      opacity: 0;
-      animation: fadeLoop 8s infinite ease-in-out;
-    }
-    .avatar img.img1 { animation-delay: 0s; opacity: 1; }
-    .avatar img.img2 { animation-delay: 2s; }
-    .avatar img.img3 { animation-delay: 4s; }
-    .avatar img.img4 { animation-delay: 6s; }
-
-    @keyframes fadeLoop {
-      0%, 10% { opacity: 1; }
-      25%, 100% { opacity: 0; }
+      display: block;
     }
 
     /* Typing effect for title */
@@ -125,12 +98,16 @@
       white-space: nowrap;
       border-right: 4px solid #00ff00;
       width: 16ch;
-      animation: typingTitle 3.5s steps(16), blink 0.75s step-end infinite;
+      animation: typing 3.5s steps(16), blink 0.75s step-end infinite;
       margin-bottom: 10px;
     }
-    @keyframes typingTitle {
+    @keyframes typing {
       from { width: 0 }
       to { width: 16ch }
+    }
+    @keyframes blink {
+      50% { border-color: transparent }
+      100% { border-color: #00ff00 }
     }
 
     .subtitle {
@@ -186,25 +163,19 @@
       color: #66ff66;
       text-shadow: 0 0 8px #66ff66;
     }
-
   </style>
 </head>
 <body>
 
-  <canvas id="matrix"></canvas>
-
-  <!-- شاشة التحميل -->
   <div id="loadingScreen" aria-live="assertive" aria-label="Chargement hacker style">
-    print("Access Granted...")
+    010101
   </div>
 
-  <!-- المحتوى الرئيسي -->
+  <canvas id="matrix"></canvas>
+
   <div class="container" role="main" aria-hidden="true" tabindex="-1">
     <div class="avatar" aria-label="Avatar de Walid Ibidar">
-      <img src="walid.png" class="img1" alt="Walid photo 1" />
-      <img src="2.jpg" class="img2" alt="Walid photo 2" />
-      <img src="3.jpg" class="img3" alt="Walid photo 3" />
-      <img src="4.jpg" class="img4" alt="Walid photo 4" />
+      <img src="walid.png" alt="Photo de Walid Ibidar" />
     </div>
 
     <h1 class="typing" aria-label="IBIDAR WALID, développeur informatique">IBIDAR WALID 👨‍💻</h1>
@@ -214,6 +185,7 @@
       <a href="https://www.facebook.com/share/1Z4EKZF2ep/" target="_blank" rel="noopener" class="btn" aria-label="Facebook de Walid">📘 Facebook</a>
       <a href="https://www.tiktok.com/@ibidare" target="_blank" rel="noopener" class="btn" aria-label="TikTok de Walid">🎵 TikTok</a>
       <a href="https://wa.me/212XXXXXXXXX" target="_blank" rel="noopener" class="btn" aria-label="WhatsApp de Walid">💬 WhatsApp</a>
+      <button id="hackBtn" class="btn" aria-label="Bouton Hack Me">🛠️ Hack Me</button>
     </div>
 
     <div class="contacts" aria-label="Contact">
@@ -223,46 +195,45 @@
   </div>
 
   <script>
+    // Matrix Effect
     const canvas = document.getElementById('matrix');
     const ctx = canvas.getContext('2d');
 
     let width = canvas.width = window.innerWidth;
     let height = canvas.height = window.innerHeight;
 
-    const letters = '01'.split('');
+    const letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()-+=<>?';
     const fontSize = 16;
     const columns = Math.floor(width / fontSize);
+
     const drops = new Array(columns).fill(1);
 
     function draw() {
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
       ctx.fillRect(0, 0, width, height);
 
       ctx.fillStyle = '#00ff00';
-      ctx.font = fontSize + 'px Share Tech Mono';
+      ctx.font = fontSize + 'px monospace';
 
-      for(let i = 0; i < drops.length; i++) {
-        const text = letters[Math.floor(Math.random() * letters.length)];
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters.charAt(Math.floor(Math.random() * letters.length));
         ctx.fillText(text, i * fontSize, drops[i] * fontSize);
 
-        if(drops[i] * fontSize > height && Math.random() > 0.975) {
+        if (drops[i] * fontSize > height && Math.random() > 0.975) {
           drops[i] = 0;
         }
         drops[i]++;
       }
     }
 
-    let interval = setInterval(draw, 35);
+    setInterval(draw, 40);
 
-    // تغيير حجم canvas عند تغيير حجم النافذة
     window.addEventListener('resize', () => {
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
-      drops.length = Math.floor(width / fontSize);
-      drops.fill(1);
     });
 
-    // شاشة تحميل typing effect + إظهار المحتوى بعد 2.5 ثانية
+    // Loading Screen logic
     window.onload = () => {
       setTimeout(() => {
         document.getElementById('loadingScreen').style.display = 'none';
@@ -270,8 +241,29 @@
         container.style.display = 'block';
         container.setAttribute('aria-hidden', 'false');
         container.focus();
-      }, 2500);
+      }, 1500); // 1.5 secondes seulement
     }
+
+    // Hack Me button effect
+    const hackBtn = document.getElementById('hackBtn');
+    hackBtn.addEventListener('click', () => {
+      const body = document.body;
+      // Toggle random colors fast for 3 seconds
+      let count = 0;
+      const interval = setInterval(() => {
+        const r = Math.floor(Math.random() * 256);
+        const g = Math.floor(Math.random() * 256);
+        const b = Math.floor(Math.random() * 256);
+        body.style.backgroundColor = `rgb(${r},${g},${b})`;
+        body.style.color = `rgb(${255 - r},${255 - g},${255 - b})`;
+        count++;
+        if (count > 30) { // ~3 sec (30 * 100ms)
+          clearInterval(interval);
+          body.style.backgroundColor = 'black';
+          body.style.color = '#00ff00';
+        }
+      }, 100);
+    });
   </script>
 
 </body>
