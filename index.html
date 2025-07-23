@@ -12,7 +12,6 @@
       padding: 0;
       font-family: 'Cairo', sans-serif;
       background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      overflow: hidden;
       color: #fff;
       display: flex;
       justify-content: center;
@@ -20,6 +19,7 @@
       height: 100vh;
       text-align: center;
       position: relative;
+      overflow: hidden;
     }
 
     .matrix {
@@ -29,13 +29,9 @@
       width: 100%;
       height: 100%;
       z-index: 0;
-      background: black;
+      background: transparent;
       opacity: 0.15;
       pointer-events: none;
-    }
-
-    canvas {
-      display: block;
     }
 
     .container {
@@ -74,16 +70,16 @@
     }
 
     .img1 { animation-delay: 0s; z-index: 4; }
-    .img2 { animation-delay: 0s; z-index: 3; }
-    .img3 { animation-delay: 2s; z-index: 2; }
-    .img4 { animation-delay: 3s; z-index: 1; }
+    .img2 { animation-delay: 2s; z-index: 3; }
+    .img3 { animation-delay: 4s; z-index: 2; }
+    .img4 { animation-delay: 6s; z-index: 1; }
 
     @keyframes fadeLoop {
       0%   { opacity: 0; }
       10%  { opacity: 1; }
       40%  { opacity: 1; }
       50%  { opacity: 0; }
-      100% { opacity: 1; }
+      100% { opacity: 0; }
     }
 
     h1 {
@@ -118,25 +114,14 @@
       border-radius: 50px;
       transition: all 0.3s ease;
       font-weight: bold;
+      box-shadow: 0 0 15px 5px rgba(255, 0, 0, 0.7);
     }
 
-.btn {
-  background: transparent;
-  color: #00bfff;
-  border: 2px solid #00bfff;
-  padding: 12px 20px;
-  text-decoration: none;
-  font-size: 1.1rem;
-  border-radius: 50px;
-  transition: all 0.3s ease;
-  font-weight: bold;
-  box-shadow: 0 0 15px 5px rgba(255, 0, 0, 0.7); /* توهج أحمر دائم */
-}
-.btn:hover {
-  background: rgba(255, 0, 0, 0.8);
-  color: #fff;
-  transform: scale(1.05);
-}
+    .btn:hover {
+      background: rgba(255, 0, 0, 0.8);
+      color: #fff;
+      transform: scale(1.05);
+    }
 
     a.contact-link {
       display: inline-block;
@@ -158,10 +143,10 @@
 
   <div class="container">
     <div class="avatar">
-      <img src="walid.png" class="img img1" />
-      <img src="2.jpg" class="img img2" />
-      <img src="3.jpg" class="img img3" />
-      <img src="4.Jpg" class="img img4" />
+      <img src="walid.png" class="img img1" alt="Walid 1"/>
+      <img src="2.jpg" class="img img2" alt="Walid 2"/>
+      <img src="3.jpg" class="img img3" alt="Walid 3"/>
+      <img src="4.jpg" class="img img4" alt="Walid 4"/>
     </div>
     <h1>IBIDAR WALID 👨‍💻</h1>
     <p class="title">🚀 Développeur Informatique</p>
@@ -169,7 +154,7 @@
     <div class="buttons">
       <a class="btn" href="https://www.facebook.com/share/1Z4EKZF2ep/" target="_blank">📘 Facebook</a>
       <a class="btn" href="https://www.tiktok.com/@ibidare" target="_blank">🎵 TikTok</a>
-      <a class="btn" href="" target="_blank">💬</a>
+      <a class="btn" href="https://wa.me/212XXXXXXXXX" target="_blank">💬 WhatsApp</a>
     </div>
 
     <div>
@@ -179,7 +164,6 @@
   </div>
 
   <script>
-    // كود بسيط جدا لماتريكس (الكتابة التي تنزل)
     const canvas = document.getElementById('matrix');
     const ctx = canvas.getContext('2d');
 
@@ -190,8 +174,7 @@
     const fontSize = 14;
     const columns = Math.floor(width / fontSize);
 
-    const drops = [];
-    for (let x = 0; x < columns; x++) drops[x] = 1;
+    const drops = Array(columns).fill(1);
 
     function draw() {
       ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
@@ -200,13 +183,15 @@
       ctx.fillStyle = '#0F0';
       ctx.font = fontSize + 'px monospace';
 
-      for (let i = 0; i < drops.length; i++) {
+      drops.forEach((y, i) => {
         const text = letters.charAt(Math.floor(Math.random() * letters.length));
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        ctx.fillText(text, i * fontSize, y * fontSize);
 
-        if (drops[i] * fontSize > height && Math.random() > 0.975) drops[i] = 0;
+        if (y * fontSize > height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
         drops[i]++;
-      }
+      });
     }
 
     setInterval(draw, 35);
