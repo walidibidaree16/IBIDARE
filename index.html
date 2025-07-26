@@ -54,27 +54,6 @@
       user-select: none;
     }
 
-    #typingText {
-      font-size: 4rem;
-      letter-spacing: 0.2em;
-      color: #00ff00;
-      text-shadow:
-        0 0 5px #0f0,
-        0 0 10px #0f0,
-        0 0 20px #0f0,
-        0 0 40px #0f0;
-      white-space: nowrap;
-      overflow: hidden;
-      border-right: 4px solid #00ff00;
-      animation: blinkCursor 0.7s step-end infinite;
-    }
-
-    @keyframes blinkCursor {
-      50% {
-        border-color: transparent;
-      }
-    }
-
     .container {
       position: relative;
       z-index: 10;
@@ -224,7 +203,7 @@
 
   <!-- شاشة التحميل -->
   <div id="loadingScreen" aria-live="polite" aria-label="Chargement du profil hacker">
-    <span id="typingText"></span>
+    <span id="typingText">010101</span>
   </div>
 
   <!-- الصفحة الرئيسية -->
@@ -240,7 +219,6 @@
       <a href="https://www.facebook.com/share/1Z4EKZF2ep/" target="_blank" rel="noopener" class="btn">📘 Facebook</a>
       <a href="https://www.tiktok.com/@ibidare" target="_blank" rel="noopener" class="btn">🎵 TikTok</a>
       <a href="https://wa.me/212XXXXXXXXX" target="_blank" rel="noopener" class="btn">💬 WhatsApp</a>
-      <button class="btn" id="hackBtn">💻 Hack Me</button>
     </div>
 
     <div class="contacts" aria-label="Contacts">
@@ -250,7 +228,7 @@
   </div>
 
   <script>
-    // تأثير Matrix
+    // تأثير Matrix مع تدرج لوني ناعم
     const canvas = document.getElementById('matrix');
     const ctx = canvas.getContext('2d');
     let width = canvas.width = window.innerWidth;
@@ -263,15 +241,23 @@
     function draw() {
       ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
       ctx.fillRect(0, 0, width, height);
-      ctx.fillStyle = '#00ff00';
       ctx.font = fontSize + 'px monospace';
 
       for (let i = 0; i < drops.length; i++) {
         const text = letters.charAt(Math.floor(Math.random() * letters.length));
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-        if (drops[i] * fontSize > height && Math.random() > 0.975) {
+        const y = drops[i] * fontSize;
+
+        const progress = y / height;
+        const red = Math.floor(255 * progress);
+        const green = Math.floor(255 * (1 - progress));
+        ctx.fillStyle = `rgb(${red},${green},0)`;
+
+        ctx.fillText(text, i * fontSize, y);
+
+        if (y > height && Math.random() > 0.975) {
           drops[i] = 0;
         }
+
         drops[i]++;
       }
     }
@@ -283,53 +269,11 @@
       height = canvas.height = window.innerHeight;
     });
 
-    // كتابة نص التحميل حرف بحرف
-    const text = "IBIDARE WALID";
-    const typingText = document.getElementById("typingText");
-    let index = 0;
-
-    function typeLetterByLetter() {
-      if (index < text.length) {
-        typingText.textContent += text.charAt(index);
-        index++;
-        setTimeout(typeLetterByLetter, 200);
-      }
-    }
-
-    setTimeout(() => {
-      typeLetterByLetter();
-    }, 500);
-
-    // إخفاء شاشة التحميل واظهار المحتوى بعد الكتابة
+    // إخفاء شاشة التحميل وظهور المحتوى بعد 3 ثواني
     setTimeout(() => {
       document.getElementById('loadingScreen').style.display = 'none';
       document.querySelector('.container').style.display = 'block';
     }, 3000);
-
-    // وظيفة زر Hack Me لتبديل الألوان
-    const hackBtn = document.getElementById('hackBtn');
-
-    hackBtn.addEventListener('click', () => {
-      alert("🚨 Alerte Hacker! Ceci est une blague! 🚨");
-
-      const colors = ['#ff0000', '#ffffff', '#00ff00', '#000000']; // أحمر، أبيض، أخضر، أسود
-      let count = 0;
-      const maxFlashes = 12;
-      const intervalTime = 300;
-
-      const interval = setInterval(() => {
-        document.body.style.backgroundColor = colors[count % colors.length];
-        document.body.style.color = colors[(count + 2) % colors.length];
-        count++;
-
-        if (count > maxFlashes) {
-          clearInterval(interval);
-          // استرجاع الألوان الأصلية
-          document.body.style.backgroundColor = '#000000';
-          document.body.style.color = '#00ff00';
-        }
-      }, intervalTime);
-    });
   </script>
 </body>
 </html>
