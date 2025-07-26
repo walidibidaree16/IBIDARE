@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>IBIDAR WALID - Hacker Style</title>
+  <title>IBIDARR WALID</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Portfolio de Walid Ibidar - Style Hacker Matrix" />
   <style>
@@ -54,7 +54,7 @@
       user-select: none;
       /* مركزها فوق الوسط بقليل */
       flex-direction: row;
-      top: 35%;
+      top: 30%;
     }
 
     #typingText {
@@ -71,7 +71,7 @@
     }
 
     @keyframes blinkCursor {
-      50% {
+      40% {
         border-color: transparent;
       }
     }
@@ -269,7 +269,7 @@
         const text = letters.charAt(Math.floor(Math.random() * letters.length));
         const y = drops[i] * fontSize;
 
-        const maxY = height * 0.4; // التدرج ينتهي عند 40% من الشاشة
+        const maxY = height * 0.3; // التدرج ينتهي عند 40% من الشاشة
         const progress = Math.min(y / maxY, 1); // من 0 إلى 1 فقط
         const red = Math.floor(255 * progress);
         const green = Math.floor(255 * (1 - progress));
@@ -293,7 +293,7 @@
     });
 
     // كتابة "010101" حرفًا بحرف + تلوين مخصص
-    const text = "010101";
+    const text = "ыфйж";
     const typingText = document.getElementById("typingText");
     let index = 0;
 
