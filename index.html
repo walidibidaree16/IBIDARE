@@ -23,7 +23,6 @@
       align-items: center;
       user-select: none;
       position: relative;
-      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     #matrix {
@@ -32,27 +31,6 @@
       width: 100vw; height: 100vh;
       z-index: 0;
       background: black;
-    }
-
-    #loadingScreen {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background: black;
-      color: #00ff00;
-      font-size: 4rem;
-      letter-spacing: 0.2em;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 20;
-      text-shadow:
-        0 0 5px #0f0,
-        0 0 10px #0f0,
-        0 0 20px #0f0,
-        0 0 40px #0f0;
-      user-select: none;
-      top: 30%;
     }
 
     .container {
@@ -66,7 +44,6 @@
       width: 90vw;
       box-shadow: 0 0 15px #00ff00, 0 0 40px #00ff00;
       text-align: center;
-      display: none;
     }
 
     .avatar {
@@ -102,21 +79,13 @@
     }
 
     @keyframes typing {
-      from {
-        width: 0;
-      }
-      to {
-        width: 16ch;
-      }
+      from { width: 0; }
+      to { width: 16ch; }
     }
 
     @keyframes blink {
-      50% {
-        border-color: transparent;
-      }
-      100% {
-        border-color: #00ff00;
-      }
+      50% { border-color: transparent; }
+      100% { border-color: #00ff00; }
     }
 
     .subtitle {
@@ -202,12 +171,7 @@
 <body>
   <canvas id="matrix"></canvas>
 
-  <!-- شاشة التحميل -->
-  <div id="loadingScreen" aria-live="polite" aria-label="Chargement du profil hacker">
-    Chargement...
-  </div>
-
-  <!-- الصفحة الرئيسية -->
+  <!-- الصفحة الرئيسية مباشرة -->
   <div class="container" role="main" aria-label="Profil de Walid Ibidar">
     <div class="avatar" aria-label="Photo de Walid Ibidar">
       <img src="walid.png" alt="Photo de Walid Ibidar" />
@@ -269,14 +233,6 @@
     window.addEventListener('resize', () => {
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
-    });
-
-    // إظهار الصفحة بعد نصف ثانية فقط
-    window.addEventListener("DOMContentLoaded", () => {
-      setTimeout(() => {
-        document.getElementById("loadingScreen").style.display = "none";
-        document.querySelector(".container").style.display = "block";
-      }, 500);
     });
   </script>
 </body>
