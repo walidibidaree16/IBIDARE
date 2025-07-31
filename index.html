@@ -45,6 +45,7 @@
   border: 4px solid white;
   object-fit: cover;
   margin-bottom: 30px;
+  opacity: 0.85;
 }
 
 .button-container {
@@ -79,28 +80,56 @@
   pointer-events: auto;
 }
 
+.facebook {
+  background-color: rgba(59, 89, 152, 0.6);
+}
+
+.tiktok {
+  background-color: rgba(255, 0, 102, 0.6);
+}
+
+.whatsapp {
+  background-color: rgba(37, 211, 102, 0.6);
+}
+
+#sound-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+  border-radius: 50%;
+  padding: 10px;
+  cursor: pointer;
+  color: white;
+  font-size: 18px;
+}
+
   </style>
 </head>
 <body>
-  <video id="bgVideo" class="bg-video" autoplay loop>
+  <video id="bgVideo" class="bg-video" autoplay loop muted playsinline>
     <source src="background.mp4" type="video/mp4">
     Your browser does not support the video tag.
-  </video>  <div class="overlay">
+  </video><button id="sound-btn">🔊</button>
+
+  <div class="overlay">
     <img src="walid.png" alt="Profile" class="profile-pic" /><div class="button-container">
-  <button class="btn" id="btn1">WhatsApp</button>
-  <button class="btn" id="btn2">Facebook</button>
-  <button class="btn" id="btn3">TikTok</button>
+  <button class="btn whatsapp" id="btn1" onclick="window.open('https://wa.me/212682654499', '_blank')">WhatsApp</button>
+  <button class="btn facebook" id="btn2" onclick="window.open('https://www.facebook.com/walidziane.99', '_blank')">Facebook</button>
+  <button class="btn tiktok" id="btn3" onclick="window.open('https://www.tiktok.com/@wld.ziane', '_blank')">TikTok</button>
 </div>
 
   </div>  <script>
-    // تشغيل الفيديو بالصوت عند أول نقرة
-    document.addEventListener("click", function () {
-      const video = document.getElementById("bgVideo");
+    const video = document.getElementById("bgVideo");
+    const soundBtn = document.getElementById("sound-btn");
+
+    soundBtn.addEventListener("click", () => {
       video.muted = false;
       video.play();
-    }, { once: true });
+      soundBtn.style.display = "none";
+    });
 
-    // عرض الأزرار بتأخير تدريجي
     window.onload = () => {
       setTimeout(() => document.getElementById("btn1").classList.add("show"), 500);
       setTimeout(() => document.getElementById("btn2").classList.add("show"), 1000);
