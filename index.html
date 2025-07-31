@@ -52,28 +52,7 @@
         0 0 20px #0f0,
         0 0 40px #0f0;
       user-select: none;
-      /* مركزها فوق الوسط بقليل */
-      flex-direction: row;
       top: 30%;
-    }
-
-    #typingText {
-      font-size: 4rem;
-      letter-spacing: 0.2em;
-      white-space: nowrap;
-      overflow: hidden;
-      border-right: 4px solid #00ff00;
-      animation: blinkCursor 0.7s step-end infinite;
-      user-select: none;
-      font-family: 'Share Tech Mono', monospace;
-      display: flex;
-      align-items: center;
-    }
-
-    @keyframes blinkCursor {
-      40% {
-        border-color: transparent;
-      }
     }
 
     .container {
@@ -225,7 +204,7 @@
 
   <!-- شاشة التحميل -->
   <div id="loadingScreen" aria-live="polite" aria-label="Chargement du profil hacker">
-    <span id="typingText"></span>
+    Chargement...
   </div>
 
   <!-- الصفحة الرئيسية -->
@@ -250,7 +229,7 @@
   </div>
 
   <script>
-    // تأثير Matrix مع تدرج أخضر → أحمر قبل منتصف الشاشة
+    // تأثير Matrix
     const canvas = document.getElementById('matrix');
     const ctx = canvas.getContext('2d');
     let width = canvas.width = window.innerWidth;
@@ -269,8 +248,8 @@
         const text = letters.charAt(Math.floor(Math.random() * letters.length));
         const y = drops[i] * fontSize;
 
-        const maxY = height * 0.3; // التدرج ينتهي عند 40% من الشاشة
-        const progress = Math.min(y / maxY, 1); // من 0 إلى 1 فقط
+        const maxY = height * 0.3;
+        const progress = Math.min(y / maxY, 1);
         const red = Math.floor(255 * progress);
         const green = Math.floor(255 * (1 - progress));
         ctx.fillStyle = `rgb(${red},${green},0)`;
@@ -292,36 +271,13 @@
       height = canvas.height = window.innerHeight;
     });
 
-    // كتابة "010101" حرفًا بحرف + تلوين مخصص
-    const text = "ыфйж";
-    const typingText = document.getElementById("typingText");
-    let index = 0;
-
-    function getColor(char, position) {
-      if (char === "0") return "#00ff00"; // أخضر
-      if (char === "1" && position === 1) return "#ff0000"; // أول 1
-      if (char === "1" && position === 3) return "#ff9900"; // ثاني 1
-      return "#ffffff";
-    }
-
-    function typeLetterByLetter() {
-      if (index < text.length) {
-        const char = text.charAt(index);
-        const span = document.createElement("span");
-        span.textContent = char;
-        span.style.color = getColor(char, index);
-        typingText.appendChild(span);
-        index++;
-        setTimeout(typeLetterByLetter, 167);
-      } else {
-        setTimeout(() => {
-          document.getElementById('loadingScreen').style.display = 'none';
-          document.querySelector('.container').style.display = 'block';
-        }, 200);
-      }
-    }
-
-    setTimeout(typeLetterByLetter, 300);
+    // إظهار الصفحة بعد نصف ثانية فقط
+    window.addEventListener("DOMContentLoaded", () => {
+      setTimeout(() => {
+        document.getElementById("loadingScreen").style.display = "none";
+        document.querySelector(".container").style.display = "block";
+      }, 500);
+    });
   </script>
 </body>
 </html>
