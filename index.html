@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Matrix Intro</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -17,38 +17,60 @@
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      z-index: -1;
+      z-index: 1;
+      display: block;
     }
 
     .start-screen {
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.75);
+      background: transparent;
       display: flex;
       justify-content: center;
       align-items: center;
-      z-index: 10;
+      z-index: 5;
     }
 
     .start-btn {
-      font-size: 48px;
+      font-size: 60px;
       color: #00ffcc;
-      text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
+      text-shadow:
+        0 0 10px #00ffcc,
+        0 0 20px #00ffcc,
+        0 0 30px #00ffd1,
+        0 0 40px #00ffd1,
+        0 0 50px #00ffd1,
+        0 0 60px #00ffd1;
       cursor: pointer;
-      transition: all 0.3s ease;
-      padding: 20px 50px;
+      padding: 20px 60px;
       border: 2px solid #00ffcc;
       border-radius: 12px;
+      transition: all 0.3s ease;
+      user-select: none;
     }
 
     .start-btn:hover {
-      background-color: rgba(0, 255, 204, 0.1);
-      box-shadow: 0 0 20px #00ffcc;
+      background-color: rgba(0, 255, 204, 0.15);
+      box-shadow:
+        0 0 20px #00ffcc,
+        0 0 40px #00ffcc,
+        0 0 60px #00ffcc,
+        0 0 80px #00ffcc;
+    }
+
+    video {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: 2;
+      display: none;
+      background: black;
     }
 
     .overlay {
-      position: absolute;
+      position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
       backdrop-filter: blur(5px);
@@ -61,6 +83,7 @@
       opacity: 0;
       pointer-events: none;
       transition: opacity 1s ease;
+      z-index: 3;
     }
 
     .overlay.active {
@@ -140,15 +163,6 @@
       background-color: rgba(255, 0, 102, 0.6);
     }
 
-    video {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      object-fit: cover;
-      z-index: -2;
-      display: none;
-    }
-
     @media (max-width: 768px) {
       .overlay { padding-top: 100px; }
       .profile-pic { width: 150px; height: 150px; margin-bottom: 20px; }
@@ -166,93 +180,70 @@
 </head>
 <body>
 
-<canvas id="matrix"></canvas>
+  <canvas id="matrix"></canvas>
 
-<div class="start-screen" id="startScreen">
-  <div class="start-btn" id="startBtn">START</div>
-</div>
-
-<video id="bgVideo" loop muted playsinline>
-  <source src="background.mp4" type="video/mp4" />
-</video>
-
-<div class="overlay" id="mainOverlay">
-  <img src="walid.png" alt="Profile" class="profile-pic" />
-  <div class="typed-text">👇🏻IBIDARE WALID 👇🏻</div>
-  <div class="button-container">
-    <button class="btn facebook" id="btn2" onclick="window.open('https://www.facebook.com/share/1ExQ7Xa1yL/', '_blank')">Facebook</button>
-    <button class="btn tiktok" id="btn3" onclick="window.open('https://www.tiktok.com/@ibidare?_t=ZS-8yTVKOXfcg9&_r=1', '_blank')">TikTok</button>
+  <div class="start-screen" id="startScreen">
+    <div class="start-btn" id="startBtn">START</div>
   </div>
-</div>
 
-<script>
-  // Matrix effect
-  const canvas = document.getElementById('matrix');
-  const ctx = canvas.getContext('2d');
+  <video id="bgVideo" loop muted playsinline>
+    <source src="background.mp4" type="video/mp4" />
+  </video>
 
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+  <div class="overlay" id="mainOverlay">
+    <img src="walid.png" alt="Profile" class="profile-pic" />
+    <div class="typed-text">👇🏻IBIDARE WALID 👇🏻</div>
+    <div class="button-container">
+      <button class="btn facebook" id="btn2" onclick="window.open('https://www.facebook.com/share/1ExQ7Xa1yL/', '_blank')">Facebook</button>
+      <button class="btn tiktok" id="btn3" onclick="window.open('https://www.tiktok.com/@ibidare?_t=ZS-8yTVKOXfcg9&_r=1', '_blank')">TikTok</button>
+    </div>
+  </div>
 
-  const letters = 'アァイィウヴエカキクケコサシスセソタチツナニヌネノハヒフヘホABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  const fontSize = 14;
-  const columns = canvas.width / fontSize;
-  const drops = Array(Math.floor(columns)).fill(1);
-  let matrixRunning = true;
+  <script>
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
+    let animationFrameId;
 
-  function drawMatrix() {
-    if (!matrixRunning) return;
-
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    ctx.fillStyle = '#0f0';
-    ctx.font = fontSize + 'px monospace';
-
-    for (let i = 0; i < drops.length; i++) {
-      const text = letters.charAt(Math.floor(Math.random() * letters.length));
-      ctx.fillStyle = `hsl(${(i * 10) % 360}, 100%, 70%)`;
-      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-      if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-        drops[i] = 0;
-      }
-      drops[i]++;
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     }
-    requestAnimationFrame(drawMatrix);
-  }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
 
-  drawMatrix();
+    const letters = 'アァイィウヴエカキクケコサシスセソタチツナニヌネノハヒフヘホABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    const fontSize = 14;
+    const columns = Math.floor(canvas.width / fontSize);
+    const drops = Array(columns).fill(1);
+    let matrixRunning = true;
 
-  const startBtn = document.getElementById("startBtn");
-  const startScreen = document.getElementById("startScreen");
-  const mainOverlay = document.getElementById("mainOverlay");
-  const video = document.getElementById("bgVideo");
+    function drawMatrix() {
+      if (!matrixRunning) {
+        cancelAnimationFrame(animationFrameId);
+        return;
+      }
 
-  startBtn.addEventListener("click", () => {
-    // إيقاف الماتريكس
-    matrixRunning = false;
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // تشغيل الفيديو بالصوت
-    video.muted = false;
-    video.volume = 1.0;
-    video.play();
-    video.style.display = "block";
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters.charAt(Math.floor(Math.random() * letters.length));
+        ctx.fillStyle = `hsl(${(i * 10) % 360}, 100%, 70%)`;
+        ctx.font = fontSize + 'px monospace';
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
 
-    // إظهار الصفحة الثانية
-    startScreen.style.display = "none";
-    mainOverlay.classList.add("active");
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
 
-    // عرض الأزرار تدريجيًا
-    setTimeout(() => document.getElementById("btn2").classList.add("show"), 1500);
-    setTimeout(() => document.getElementById("btn3").classList.add("show"), 2000);
-  });
+      animationFrameId = requestAnimationFrame(drawMatrix);
+    }
 
-  // إعادة ضبط حجم الكانفاس عند تغيير حجم الشاشة
-  window.addEventListener('resize', () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  });
-</script>
+    drawMatrix();
 
-</body>
-</html>
+    const startBtn = document.getElementById("startBtn");
+    const startScreen = document.getElementById("startScreen");
+    const mainOverlay = document.getElementById("mainOverlay");
+    const video = document.getElementById("bgVideo");
