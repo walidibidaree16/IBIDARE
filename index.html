@@ -1,96 +1,110 @@
 <!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Welcome</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Animated Landing</title>
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-    }
-    body, html {
-      height: 100%;
-      overflow: hidden;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }video.bg-video {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  object-fit: cover;
-  z-index: -2;
+    }body, html {
+  height: 100%;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
 }
 
-.overlay {
+.bg-video {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(2px);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   z-index: -1;
 }
 
-.content {
-  position: relative;
-  z-index: 1;
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(5px);
+  background: rgba(0, 0, 0, 0.4);
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  height: 100vh;
-  text-align: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .profile-pic {
-  width: 150px;
-  height: 150px;
+  width: 220px;
+  height: 220px;
   border-radius: 50%;
-  border: 4px solid #00ff00;
+  border: 4px solid white;
   object-fit: cover;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
-.buttons {
+.button-container {
   display: flex;
-  gap: 20px;
-  margin-top: 30px;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
 }
 
-.buttons a {
-  text-decoration: none;
+.btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 30px;
   font-size: 18px;
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.15);
   color: white;
-  background-color: rgba(0, 255, 0, 0.3);
-  border: 2px solid #00ff00;
-  padding: 10px 20px;
-  border-radius: 10px;
-  transition: 0.3s;
+  backdrop-filter: blur(3px);
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
 }
 
-.buttons a:hover {
-  background-color: #00ff00;
-  color: black;
+.btn:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.btn.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }
 
   </style>
 </head>
-<body>  <!-- خلفية الفيديو -->  <video class="bg-video" autoplay muted loop>
+<body>
+  <video id="bgVideo" class="bg-video" autoplay loop>
     <source src="background.mp4" type="video/mp4">
     Your browser does not support the video tag.
-  </video>  <!-- طبقة شفافة فوق الفيديو -->  <div class="overlay"></div>  <!-- المحتوى -->  <div class="content">
-    <img src="walid.png" alt="walid" class="profile-pic"><div class="buttons">
-  <a href="https://wa.me/">WhatsApp</a>
-  <a href="https://tiktok.com/">TikTok</a>
-  <a href="https://facebook.com/">Facebook</a>
+  </video>  <div class="overlay">
+    <img src="walid.png" alt="Profile" class="profile-pic" /><div class="button-container">
+  <button class="btn" id="btn1">WhatsApp</button>
+  <button class="btn" id="btn2">Facebook</button>
+  <button class="btn" id="btn3">TikTok</button>
 </div>
 
-  </div>  <!-- تشغيل الأغنية تلقائياً -->  <audio autoplay loop>
-    <source src="https://files.catbox.moe/zp41ba.mp3" type="audio/mp3">
-    Your browser does not support the audio element.
-  </audio>
-</body>
+  </div>  <script>
+    // تشغيل الفيديو بالصوت عند أول نقرة
+    document.addEventListener("click", function () {
+      const video = document.getElementById("bgVideo");
+      video.muted = false;
+      video.play();
+    }, { once: true });
+
+    // عرض الأزرار بتأخير تدريجي
+    window.onload = () => {
+      setTimeout(() => document.getElementById("btn1").classList.add("show"), 500);
+      setTimeout(() => document.getElementById("btn2").classList.add("show"), 1000);
+      setTimeout(() => document.getElementById("btn3").classList.add("show"), 1500);
+    };
+  </script></body>
 </html>
