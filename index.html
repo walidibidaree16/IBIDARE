@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,132 +9,232 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-    }body, html {
-  height: 100%;
-  font-family: Arial, sans-serif;
-  overflow: hidden;
-}
+    }
 
-.bg-video {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: -1;
-}
+    body, html {
+      height: 100%;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+    }
 
-.overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  backdrop-filter: blur(5px);
-  background: rgba(0, 0, 0, 0.4);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
+    .bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
 
-.profile-pic {
-  width: 220px;
-  height: 220px;
-  border-radius: 50%;
-  border: 4px solid white;
-  object-fit: cover;
-  margin-bottom: 30px;
-  opacity: 0.85;
-}
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      backdrop-filter: blur(5px);
+      background: rgba(0, 0, 0, 0.4);
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      flex-direction: column;
+      padding-top: 150px;
+    }
 
-.button-container {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  align-items: center;
-}
+    .profile-pic {
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      border: 4px solid white;
+      object-fit: cover;
+      margin-bottom: 30px;
+      opacity: 0.85;
+    }
 
-.btn {
-  padding: 12px 24px;
-  border: none;
-  border-radius: 30px;
-  font-size: 18px;
-  cursor: pointer;
-  background-color: rgba(255, 255, 255, 0.15);
-  color: white;
-  backdrop-filter: blur(3px);
-  transition: all 0.3s ease;
-  opacity: 0;
-  transform: translateY(20px);
-  pointer-events: none;
-}
+    .typed-text {
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 30px;
+      text-align: center;
+      white-space: nowrap;
+      border-right: 2px solid white;
+      overflow: hidden;
+      width: 0;
+      animation: typing 3s steps(30, end) forwards, blink 0.7s step-end infinite;
+    }
 
-.btn:hover {
-  background-color: rgba(255, 255, 255, 0.3);
-}
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 280px; }
+    }
 
-.btn.show {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-}
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
 
-.facebook {
-  background-color: rgba(59, 89, 152, 0.6);
-}
+    .button-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      align-items: center;
+    }
 
-.tiktok {
-  background-color: rgba(255, 0, 102, 0.6);
-}
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 30px;
+      font-size: 18px;
+      cursor: pointer;
+      background-color: rgba(255, 255, 255, 0.15);
+      color: white;
+      backdrop-filter: blur(3px);
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateY(20px);
+      pointer-events: none;
+    }
 
-.whatsapp {
-  background-color: rgba(37, 211, 102, 0.6);
-}
+    .btn:hover {
+      background-color: rgba(255, 255, 255, 0.3);
+    }
 
-#sound-btn {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background: rgba(255, 255, 255, 0.3);
-  border: none;
-  border-radius: 50%;
-  padding: 10px;
-  cursor: pointer;
-  color: white;
-  font-size: 18px;
-}
+    .btn.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
 
+    .facebook {
+      background-color: rgba(59, 89, 152, 0.6);
+    }
+
+    .tiktok {
+      background-color: rgba(255, 0, 102, 0.6);
+    }
+
+    .whatsapp {
+      background-color: rgba(37, 211, 102, 0.6);
+    }
+
+    #sound-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.3);
+      border: none;
+      border-radius: 50%;
+      padding: 10px;
+      cursor: pointer;
+      color: white;
+      font-size: 18px;
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .overlay {
+        padding-top: 100px;
+      }
+
+      .profile-pic {
+        width: 150px;
+        height: 150px;
+        margin-bottom: 20px;
+      }
+
+      .typed-text {
+        font-size: 20px;
+      }
+
+      .btn {
+        font-size: 16px;
+        padding: 10px 20px;
+      }
+
+      #sound-btn {
+        font-size: 16px;
+        padding: 8px;
+        top: 15px;
+        right: 15px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .overlay {
+        padding-top: 80px;
+      }
+
+      .profile-pic {
+        width: 120px;
+        height: 120px;
+      }
+
+      .typed-text {
+        font-size: 18px;
+      }
+
+      .btn {
+        font-size: 14px;
+        padding: 8px 16px;
+      }
+
+      #sound-btn {
+        font-size: 14px;
+        padding: 6px;
+      }
+    }
   </style>
 </head>
 <body>
-  <video id="bgVideo" class="bg-video" autoplay loop muted playsinline>
-    <source src="background.mp4" type="video/mp4">
+  <video id="bgVideo" class="bg-video" autoplay loop playsinline>
+    <source src="background.mp4" type="video/mp4" />
     Your browser does not support the video tag.
-  </video><button id="sound-btn">🔊</button>
+  </video>
+
+  <button id="sound-btn">🔊</button>
 
   <div class="overlay">
-    <img src="walid.png" alt="Profile" class="profile-pic" /><div class="button-container">
-  <button class="btn whatsapp" id="btn1" onclick="window.open('https://wa.me/', '_blank')">👇🏻IBIDARE WALID 👇🏻</button>
-  <button class="btn facebook" id="btn2" onclick="window.open('https://www.facebook.com/share/1ExQ7Xa1yL/', '_blank')">Facebook</button>
-  <button class="btn tiktok" id="btn3" onclick="window.open('https://www.tiktok.com/@ibidare?_t=ZS-8yTVKOXfcg9&_r=1', '_blank')">TikTok</button>
-</div>
+    <img src="walid.png" alt="Profile" class="profile-pic" />
+    
+    <!-- ✅ نص متحرك يظهر حرفًا بحرف -->
+    <div class="typed-text">👇🏻IBIDARE WALID 👇🏻</div>
+    
+    <div class="button-container">
+      <button class="btn facebook" id="btn2" onclick="window.open('https://www.facebook.com/share/1ExQ7Xa1yL/', '_blank')">Facebook</button>
+      <button class="btn tiktok" id="btn3" onclick="window.open('https://www.tiktok.com/@ibidare?_t=ZS-8yTVKOXfcg9&_r=1', '_blank')">TikTok</button>
+    </div>
+  </div>
 
-  </div>  <script>
+  <script>
     const video = document.getElementById("bgVideo");
     const soundBtn = document.getElementById("sound-btn");
+
+    window.addEventListener("load", () => {
+      video.muted = false;
+      const playPromise = video.play();
+
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            soundBtn.style.display = "none";
+          })
+          .catch((error) => {
+            video.muted = true;
+            video.play();
+            soundBtn.style.display = "block";
+          });
+      }
+
+      setTimeout(() => document.getElementById("btn2").classList.add("show"), 1500);
+      setTimeout(() => document.getElementById("btn3").classList.add("show"), 2000);
+    });
 
     soundBtn.addEventListener("click", () => {
       video.muted = false;
       video.play();
       soundBtn.style.display = "none";
     });
-
-    window.onload = () => {
-      setTimeout(() => document.getElementById("btn1").classList.add("show"), 500);
-      setTimeout(() => document.getElementById("btn2").classList.add("show"), 1000);
-      setTimeout(() => document.getElementById("btn3").classList.add("show"), 1500);
-    };
-  </script></body>
+  </script>
+</body>
 </html>
