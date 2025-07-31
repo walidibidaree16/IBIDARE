@@ -9,7 +9,7 @@
     html, body {
       height: 100%;
       background: black;
-      font-family: monospace;
+      font-family: 'Courier New', monospace;
       overflow: hidden;
     }
 
@@ -17,61 +17,34 @@
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      z-index: -2;
+      z-index: -1;
     }
 
     .start-screen {
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.75);
       display: flex;
       justify-content: center;
       align-items: center;
-      background: rgba(0, 0, 0, 0.6);
       z-index: 10;
-      flex-direction: column;
     }
 
-    .start-button {
-      font-size: 32px;
-      color: #00ff00;
-      text-shadow: 0 0 5px red, 0 0 10px #0f0;
-      padding: 20px 40px;
-      border: 2px solid #0f0;
-      border-radius: 10px;
+    .start-btn {
+      font-size: 48px;
+      color: #00ffcc;
+      text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
       cursor: pointer;
-      transition: 0.3s;
-      animation: glow 1.5s infinite alternate;
+      transition: all 0.3s ease;
+      padding: 20px 50px;
+      border: 2px solid #00ffcc;
+      border-radius: 12px;
     }
 
-    .start-button:hover {
-      transform: scale(1.1);
-      background-color: rgba(255,255,255,0.05);
-    }
-
-    @keyframes glow {
-      from {
-        text-shadow: 0 0 10px #0f0, 0 0 20px red;
-      }
-      to {
-        text-shadow: 0 0 20px red, 0 0 40px #0f0;
-      }
-    }
-
-    .main-content {
-      display: none;
-      position: relative;
-      width: 100%;
-      height: 100%;
-      z-index: 5;
-    }
-
-    .bg-video {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      object-fit: cover;
-      z-index: -1;
+    .start-btn:hover {
+      background-color: rgba(0, 255, 204, 0.1);
+      box-shadow: 0 0 20px #00ffcc;
     }
 
     .overlay {
@@ -79,98 +52,165 @@
       top: 0; left: 0;
       width: 100%; height: 100%;
       backdrop-filter: blur(5px);
-      background: rgba(0, 0, 0, 0.5);
+      background: rgba(0, 0, 0, 0.4);
       padding-top: 150px;
       display: flex;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
       flex-direction: column;
-      color: white;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 1s ease;
+    }
+
+    .overlay.active {
+      opacity: 1;
+      pointer-events: auto;
     }
 
     .profile-pic {
-      width: 180px;
-      height: 180px;
+      width: 220px;
+      height: 220px;
       border-radius: 50%;
       border: 4px solid #00bfff;
       object-fit: cover;
       margin-bottom: 30px;
+      opacity: 0.9;
+    }
+
+    .typed-text {
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 30px;
+      text-align: center;
+      white-space: nowrap;
+      border-right: 2px solid white;
+      overflow: hidden;
+      width: 0;
+      animation: typing 3s steps(30, end) forwards, blink 0.7s step-end infinite;
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 280px; }
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent; }
     }
 
     .button-container {
       display: flex;
-      gap: 15px;
       flex-direction: column;
-      margin-top: 20px;
+      gap: 15px;
+      align-items: center;
     }
 
     .btn {
-      padding: 10px 20px;
-      font-size: 16px;
-      border-radius: 30px;
+      padding: 12px 24px;
       border: none;
+      border-radius: 30px;
+      font-size: 18px;
       cursor: pointer;
+      background-color: rgba(255, 255, 255, 0.15);
       color: white;
-      background-color: rgba(255,255,255,0.1);
-      backdrop-filter: blur(2px);
-      transition: 0.3s;
+      backdrop-filter: blur(3px);
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateY(20px);
+      pointer-events: none;
     }
 
     .btn:hover {
-      background-color: rgba(255,255,255,0.3);
+      background-color: rgba(255, 255, 255, 0.3);
     }
 
-    .facebook { background-color: rgba(59, 89, 152, 0.6); }
-    .tiktok { background-color: rgba(255, 0, 102, 0.6); }
+    .btn.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .facebook {
+      background-color: rgba(59, 89, 152, 0.6);
+    }
+
+    .tiktok {
+      background-color: rgba(255, 0, 102, 0.6);
+    }
+
+    video {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: -2;
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .overlay { padding-top: 100px; }
+      .profile-pic { width: 150px; height: 150px; margin-bottom: 20px; }
+      .typed-text { font-size: 20px; }
+      .btn { font-size: 16px; padding: 10px 20px; }
+    }
+
+    @media (max-width: 480px) {
+      .overlay { padding-top: 80px; }
+      .profile-pic { width: 120px; height: 120px; }
+      .typed-text { font-size: 18px; }
+      .btn { font-size: 14px; padding: 8px 16px; }
+    }
   </style>
 </head>
 <body>
 
-<canvas id="matrixCanvas"></canvas>
+<canvas id="matrix"></canvas>
 
-<!-- شاشة البداية -->
 <div class="start-screen" id="startScreen">
-  <div class="start-button" id="startBtn">0101&nbsp;S&nbsp;T&nbsp;A&nbsp;R&nbsp;T&nbsp;0101</div>
+  <div class="start-btn" id="startBtn">START</div>
 </div>
 
-<!-- الصفحة الثانية -->
-<div class="main-content" id="mainContent">
-  <video id="bgVideo" class="bg-video" autoplay muted loop>
-    <source src="background.mp4" type="video/mp4" />
-  </video>
-  <div class="overlay">
-    <img src="walid.png" alt="Profile" class="profile-pic" />
-    <div class="button-container">
-      <button class="btn facebook" onclick="window.open('https://www.facebook.com/share/1ExQ7Xa1yL/', '_blank')">Facebook</button>
-      <button class="btn tiktok" onclick="window.open('https://www.tiktok.com/@ibidare?_t=ZS-8yTVKOXfcg9&_r=1', '_blank')">TikTok</button>
-    </div>
+<video id="bgVideo" loop muted playsinline>
+  <source src="background.mp4" type="video/mp4" />
+</video>
+
+<div class="overlay" id="mainOverlay">
+  <img src="walid.png" alt="Profile" class="profile-pic" />
+  <div class="typed-text">👇🏻IBIDARE WALID 👇🏻</div>
+  <div class="button-container">
+    <button class="btn facebook" id="btn2" onclick="window.open('https://www.facebook.com/share/1ExQ7Xa1yL/', '_blank')">Facebook</button>
+    <button class="btn tiktok" id="btn3" onclick="window.open('https://www.tiktok.com/@ibidare?_t=ZS-8yTVKOXfcg9&_r=1', '_blank')">TikTok</button>
   </div>
 </div>
 
 <script>
-  // ماتريكس
-  const canvas = document.getElementById('matrixCanvas');
+  // Matrix effect
+  const canvas = document.getElementById('matrix');
   const ctx = canvas.getContext('2d');
 
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 
-  const letters = '01';
-  const fontSize = 16;
+  const letters = 'アァイィウヴエカキクケコサシスセソタチツナニヌネノハヒフヘホABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  const fontSize = 14;
   const columns = canvas.width / fontSize;
   const drops = Array(Math.floor(columns)).fill(1);
-  let animationRunning = true;
+  let matrixRunning = true;
 
   function drawMatrix() {
-    if (!animationRunning) return;
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+    if (!matrixRunning) return;
+
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    ctx.fillStyle = '#0F0';
-    ctx.font = fontSize + "px monospace";
+    ctx.fillStyle = '#0f0';
+    ctx.font = fontSize + 'px monospace';
 
     for (let i = 0; i < drops.length; i++) {
-      const text = letters[Math.floor(Math.random() * letters.length)];
+      const text = letters.charAt(Math.floor(Math.random() * letters.length));
+      ctx.fillStyle = `hsl(${(i * 10) % 360}, 100%, 70%)`;
       ctx.fillText(text, i * fontSize, drops[i] * fontSize);
 
       if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
@@ -183,22 +223,34 @@
 
   drawMatrix();
 
-  // عند الضغط على START
-  document.getElementById("startBtn").addEventListener("click", () => {
-    // إيقاف الماتريكس
-    animationRunning = false;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  const startBtn = document.getElementById("startBtn");
+  const startScreen = document.getElementById("startScreen");
+  const mainOverlay = document.getElementById("mainOverlay");
+  const video = document.getElementById("bgVideo");
 
-    // إخفاء شاشة البداية
-    document.getElementById("startScreen").style.display = "none";
+  startBtn.addEventListener("click", () => {
+    // إيقاف الماتريكس
+    matrixRunning = false;
+
+    // تشغيل الفيديو بالصوت
+    video.muted = false;
+    video.volume = 1.0;
+    video.play();
+    video.style.display = "block";
 
     // إظهار الصفحة الثانية
-    document.getElementById("mainContent").style.display = "block";
+    startScreen.style.display = "none";
+    mainOverlay.classList.add("active");
 
-    // تفعيل الصوت
-    const video = document.getElementById("bgVideo");
-    video.muted = false;
-    video.play();
+    // عرض الأزرار تدريجيًا
+    setTimeout(() => document.getElementById("btn2").classList.add("show"), 1500);
+    setTimeout(() => document.getElementById("btn3").classList.add("show"), 2000);
+  });
+
+  // إعادة ضبط حجم الكانفاس عند تغيير حجم الشاشة
+  window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
   });
 </script>
 
