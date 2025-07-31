@@ -2,14 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Animated Landing</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body, html {
       height: 100%;
@@ -19,34 +15,81 @@
 
     .bg-video {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       object-fit: cover;
       z-index: -1;
     }
 
+    /* شاشة البداية */
+    .start-overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 10;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.7);
+      overflow: hidden;
+    }
+
+    .start-overlay .start-bg {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-image: url('https://images.unsplash.com/photo-1616248240294-7ec3a63965da?auto=format&fit=crop&w=1950&q=80');
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.5) blur(2px);
+      z-index: -1;
+    }
+
+    #startBtn {
+      padding: 16px 40px;
+      font-size: 22px;
+      border-radius: 50px;
+      border: 2px solid #d4af37;
+      cursor: pointer;
+      background-color: #000;
+      color: #d4af37;
+      font-weight: bold;
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
+      transition: all 0.3s ease;
+    }
+
+    #startBtn:hover {
+      background-color: #d4af37;
+      color: #000;
+      box-shadow: 0 0 30px rgba(212, 175, 55, 0.9);
+    }
+
     .overlay {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       backdrop-filter: blur(5px);
       background: rgba(0, 0, 0, 0.4);
+      padding-top: 150px;
       display: flex;
       justify-content: flex-start;
       align-items: center;
       flex-direction: column;
-      padding-top: 150px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 1s ease;
+    }
+
+    .overlay.active {
+      opacity: 1;
+      pointer-events: auto;
     }
 
     .profile-pic {
       width: 220px;
       height: 220px;
       border-radius: 50%;
-      border: 4px solid #00bfff; /* ✅ إطار أزرق فاتح */
+      border: 4px solid #00bfff;
       object-fit: cover;
       margin-bottom: 30px;
       opacity: 0.9;
@@ -114,83 +157,36 @@
       background-color: rgba(255, 0, 102, 0.6);
     }
 
-    #sound-btn {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background: rgba(255, 255, 255, 0.3);
-      border: none;
-      border-radius: 50%;
-      padding: 10px;
-      cursor: pointer;
-      color: white;
-      font-size: 18px;
-      display: none;
-    }
-
     @media (max-width: 768px) {
-      .overlay {
-        padding-top: 100px;
-      }
-
-      .profile-pic {
-        width: 150px;
-        height: 150px;
-        margin-bottom: 20px;
-      }
-
-      .typed-text {
-        font-size: 20px;
-      }
-
-      .btn {
-        font-size: 16px;
-        padding: 10px 20px;
-      }
-
-      #sound-btn {
-        font-size: 16px;
-        padding: 8px;
-        top: 15px;
-        right: 15px;
-      }
+      .overlay { padding-top: 100px; }
+      .profile-pic { width: 150px; height: 150px; margin-bottom: 20px; }
+      .typed-text { font-size: 20px; }
+      .btn { font-size: 16px; padding: 10px 20px; }
     }
 
     @media (max-width: 480px) {
-      .overlay {
-        padding-top: 80px;
-      }
-
-      .profile-pic {
-        width: 120px;
-        height: 120px;
-      }
-
-      .typed-text {
-        font-size: 18px;
-      }
-
-      .btn {
-        font-size: 14px;
-        padding: 8px 16px;
-      }
-
-      #sound-btn {
-        font-size: 14px;
-        padding: 6px;
-      }
+      .overlay { padding-top: 80px; }
+      .profile-pic { width: 120px; height: 120px; }
+      .typed-text { font-size: 18px; }
+      .btn { font-size: 14px; padding: 8px 16px; }
     }
   </style>
 </head>
 <body>
-  <video id="bgVideo" class="bg-video" autoplay loop muted playsinline>
-    <source src="background.mp4" type="video/mp4" />
+
+  <video id="bgVideo" class="bg-video" loop muted playsinline>
+    <source src="background.mp4" type="video/mp4"/>
     Your browser does not support the video tag.
   </video>
 
-  <button id="sound-btn">🔊</button>
+  <!-- شاشة البداية -->
+  <div class="start-overlay" id="startOverlay">
+    <div class="start-bg"></div>
+    <button id="startBtn">🎬 ابدأ</button>
+  </div>
 
-  <div class="overlay">
+  <!-- محتوى الصفحة الرئيسي -->
+  <div class="overlay" id="mainOverlay">
     <img src="walid.png" alt="Profile" class="profile-pic" />
     <div class="typed-text">👇🏻IBIDARE WALID 👇🏻</div>
     <div class="button-container">
@@ -201,34 +197,23 @@
 
   <script>
     const video = document.getElementById("bgVideo");
-    const soundBtn = document.getElementById("sound-btn");
+    const startBtn = document.getElementById("startBtn");
+    const startOverlay = document.getElementById("startOverlay");
+    const mainOverlay = document.getElementById("mainOverlay");
 
-    window.addEventListener("load", () => {
-      // محاولة إزالة كتم الصوت وتشغيل الفيديو مباشرة
+    startBtn.addEventListener("click", () => {
+      // تفعيل الصوت وتشغيل الفيديو
       video.muted = false;
+      video.volume = 1.0;
+      video.play();
 
-      const playPromise = video.play();
-      if (playPromise !== undefined) {
-        playPromise
-          .then(() => {
-            soundBtn.style.display = "none";
-          })
-          .catch((error) => {
-            console.warn("Autoplay with sound failed:", error);
-            video.muted = true;
-            video.play();
-            soundBtn.style.display = "block";
-          });
-      }
+      // إظهار العناصر الرئيسية
+      startOverlay.style.display = "none";
+      mainOverlay.classList.add("active");
 
+      // عرض الأزرار تدريجيًا
       setTimeout(() => document.getElementById("btn2").classList.add("show"), 1500);
       setTimeout(() => document.getElementById("btn3").classList.add("show"), 2000);
-    });
-
-    soundBtn.addEventListener("click", () => {
-      video.muted = false;
-      video.play();
-      soundBtn.style.display = "none";
     });
   </script>
 </body>
