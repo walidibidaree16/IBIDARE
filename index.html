@@ -1,239 +1,96 @@
-<!DOCTYPE html>
-<html lang="fr">
+<!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>IBIDARR WALID</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Portfolio de Walid Ibidar - Style Hacker Matrix" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
-
     * {
-      margin: 0; padding: 0; box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-
-    body {
-      background: black;
-      font-family: 'Share Tech Mono', monospace;
-      color: #00ff00;
-      overflow: hidden;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      user-select: none;
-      position: relative;
-    }
-
-    #matrix {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      z-index: 0;
-      background: black;
-    }
-
-    .container {
-      position: relative;
-      z-index: 10;
-      background: rgba(0, 20, 0, 0.85);
-      border: 2px solid #00ff00;
-      border-radius: 15px;
-      padding: 30px 30px 40px 30px;
-      max-width: 380px;
-      width: 90vw;
-      box-shadow: 0 0 15px #00ff00, 0 0 40px #00ff00;
-      text-align: center;
-    }
-
-    .avatar {
-      width: 140px;
-      height: 140px;
-      margin: 0 auto 25px;
-      border-radius: 50%;
-      overflow: hidden;
-      border: 3px solid #00ff00;
-      box-shadow: 0 0 15px #00ff00;
-      position: relative;
-    }
-
-    .avatar img {
-      width: 100%;
+    body, html {
       height: 100%;
-      object-fit: cover;
-      border-radius: 50%;
-    }
-
-    .typing {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: #00ff00;
-      letter-spacing: 0.1em;
       overflow: hidden;
-      white-space: nowrap;
-      border-right: 4px solid #00ff00;
-      width: 16ch;
-      margin: 0 auto 15px;
-      animation: typing 3.5s steps(16), blink 0.7s step-end infinite;
-      user-select: none;
-    }
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }video.bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -2;
+}
 
-    @keyframes typing {
-      from { width: 0; }
-      to { width: 16ch; }
-    }
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+  z-index: -1;
+}
 
-    @keyframes blink {
-      50% { border-color: transparent; }
-      100% { border-color: #00ff00; }
-    }
+.content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+}
 
-    .subtitle {
-      font-size: 1.1rem;
-      margin-bottom: 30px;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      color: #0f0;
-      text-shadow: 0 0 5px #0f0;
-    }
+.profile-pic {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 4px solid #00ff00;
+  object-fit: cover;
+  margin-bottom: 20px;
+}
 
-    .buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      margin-bottom: 20px;
-      user-select: none;
-    }
+.buttons {
+  display: flex;
+  gap: 20px;
+  margin-top: 30px;
+}
 
-    .btn {
-      background: transparent;
-      border: 2px solid #00ff00;
-      color: #00ff00;
-      padding: 12px 25px;
-      font-size: 1.2rem;
-      font-weight: 700;
-      border-radius: 50px;
-      cursor: pointer;
-      box-shadow: 0 0 10px #00ff00, inset 0 0 10px #00ff00;
-      transition: all 0.3s ease;
-      text-decoration: none;
-      user-select: none;
-      position: relative;
-      overflow: hidden;
-    }
+.buttons a {
+  text-decoration: none;
+  font-size: 18px;
+  color: white;
+  background-color: rgba(0, 255, 0, 0.3);
+  border: 2px solid #00ff00;
+  padding: 10px 20px;
+  border-radius: 10px;
+  transition: 0.3s;
+}
 
-    .btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(120deg, transparent, #00ff00, transparent);
-      transition: all 0.5s ease;
-      z-index: 0;
-    }
+.buttons a:hover {
+  background-color: #00ff00;
+  color: black;
+}
 
-    .btn:hover::before {
-      left: 100%;
-    }
-
-    .btn:hover {
-      background: #00ff00;
-      color: black;
-      box-shadow: 0 0 20px #00ff00, inset 0 0 30px #00ff00;
-      transform: scale(1.1);
-    }
-
-    .contacts {
-      color: #00ff00;
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      font-weight: 700;
-      font-size: 1rem;
-      user-select: none;
-    }
-
-    .contact-link {
-      color: #00ff00;
-      text-decoration: none;
-      transition: color 0.3s ease;
-      user-select: none;
-    }
-
-    .contact-link:hover {
-      color: #66ff66;
-      text-shadow: 0 0 8px #66ff66;
-    }
   </style>
 </head>
-<body>
-  <canvas id="matrix"></canvas>
+<body>  <!-- خلفية الفيديو -->  <video class="bg-video" autoplay muted loop>
+    <source src="background.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>  <!-- طبقة شفافة فوق الفيديو -->  <div class="overlay"></div>  <!-- المحتوى -->  <div class="content">
+    <img src="walid.png" alt="walid" class="profile-pic"><div class="buttons">
+  <a href="https://wa.me/">WhatsApp</a>
+  <a href="https://tiktok.com/">TikTok</a>
+  <a href="https://facebook.com/">Facebook</a>
+</div>
 
-  <!-- الصفحة الرئيسية مباشرة -->
-  <div class="container" role="main" aria-label="Profil de Walid Ibidar">
-    <div class="avatar" aria-label="Photo de Walid Ibidar">
-      <img src="walid.png" alt="Photo de Walid Ibidar" />
-    </div>
-
-    <h1 class="typing" aria-label="Nom: IBIDAR WALID">IBIDAR WALID</h1>
-    <p class="subtitle">Développeur Informatique</p>
-
-    <div class="buttons" role="navigation" aria-label="Liens des réseaux sociaux">
-      <a href="https://www.facebook.com/share/1Z4EKZF2ep/" target="_blank" rel="noopener" class="btn">📘 Facebook</a>
-      <a href="https://www.tiktok.com/@ibidare" target="_blank" rel="noopener" class="btn">🎵 TikTok</a>
-      <a href="https://wa.me/212XXXXXXXXX" target="_blank" rel="noopener" class="btn">💬 WhatsApp</a>
-    </div>
-
-    <div class="contacts" aria-label="Contacts">
-      <a href="mailto:walid.ibidare@gmail.com" class="contact-link">📧 walid.ibidare@gmail.com</a>
-      <a href="https://github.com/yourusername" target="_blank" rel="noopener" class="contact-link">🐙 GitHub</a>
-    </div>
-  </div>
-
-  <script>
-    // تأثير Matrix
-    const canvas = document.getElementById('matrix');
-    const ctx = canvas.getContext('2d');
-    let width = canvas.width = window.innerWidth;
-    let height = canvas.height = window.innerHeight;
-    const letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()-+=<>?';
-    const fontSize = 16;
-    const columns = Math.floor(width / fontSize);
-    const drops = new Array(columns).fill(1);
-
-    function draw() {
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
-      ctx.fillRect(0, 0, width, height);
-      ctx.font = fontSize + 'px monospace';
-
-      for (let i = 0; i < drops.length; i++) {
-        const text = letters.charAt(Math.floor(Math.random() * letters.length));
-        const y = drops[i] * fontSize;
-
-        const maxY = height * 0.3;
-        const progress = Math.min(y / maxY, 1);
-        const red = Math.floor(255 * progress);
-        const green = Math.floor(255 * (1 - progress));
-        ctx.fillStyle = `rgb(${red},${green},0)`;
-
-        ctx.fillText(text, i * fontSize, y);
-
-        if (y > height && Math.random() > 0.975) {
-          drops[i] = 0;
-        }
-
-        drops[i]++;
-      }
-    }
-
-    setInterval(draw, 40);
-
-    window.addEventListener('resize', () => {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-    });
-  </script>
+  </div>  <!-- تشغيل الأغنية تلقائياً -->  <audio autoplay loop>
+    <source src="https://files.catbox.moe/zp41ba.mp3" type="audio/mp3">
+    Your browser does not support the audio element.
+  </audio>
 </body>
 </html>
