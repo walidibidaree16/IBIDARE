@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Matrix Start + Video Page</title>
+  <title>Matrix Start + Video Page (Modified)</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body {
@@ -13,25 +13,19 @@
       font-family: 'Courier New', monospace;
     }
 
-    canvas {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      display: block;
-      z-index: 1;
-    }
-
     #startScreen {
       position: fixed;
-      top: 0; left: 0;
+      top: 20%; /* رفع الزر قليلا للأعلى */
+      left: 0;
       width: 100%; height: 100%;
       display: flex;
       justify-content: center;
-      align-items: center;
+      align-items: flex-start;
       z-index: 10;
     }
 
     #startBtn {
+      margin-top: 40px;
       font-size: 60px;
       color: #00ff00;
       padding: 20px 60px;
@@ -49,26 +43,28 @@
     }
 
     @keyframes glow {
-      from {
-        text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00;
-      }
-      to {
-        text-shadow: 0 0 20px #00ff00, 0 0 40px #00ff00, 0 0 60px #00ff00;
-      }
+      from { text-shadow: 0 0 5px #00ff00; }
+      to { text-shadow: 0 0 20px #00ff00, 0 0 40px #00ff00, 0 0 60px #00ff00; }
     }
 
     #imageBackground {
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background-image: url('Screenshot_20250802_011655.jpg');
+      background-image: url('Screenshot_20250802_011655.jpg'); /* سيتم استبدال بعد START */
       background-size: cover;
       background-position: center;
       z-index: 4;
+      transition: background-image 1s ease;
     }
 
     #bgVideo {
-      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: 3;
+      opacity: 0.5;
     }
 
     #mainOverlay {
@@ -105,12 +101,8 @@
     }
 
     @keyframes pulseGreen {
-      from {
-        box-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
-      }
-      to {
-        box-shadow: 0 0 30px #00ff00, 0 0 60px #00ff00;
-      }
+      from { box-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00; }
+      to { box-shadow: 0 0 30px #00ff00, 0 0 60px #00ff00; }
     }
 
     .typed-text {
@@ -183,12 +175,19 @@
       background-color: rgba(255, 0, 102, 0.6);
     }
 
+    .porsche {
+      background-color: rgba(255, 255, 255, 0.4);
+      font-size: 22px;
+      padding: 16px 32px;
+    }
+
     @media (max-width: 768px) {
       #mainOverlay { padding-top: 100px; }
       .profile-pic { width: 150px; height: 150px; margin-bottom: 20px; }
       .typed-text { font-size: 20px; }
       .subtitle { font-size: 18px; }
       .btn { font-size: 16px; padding: 10px 20px; }
+      .porsche { font-size: 18px; padding: 14px 28px; }
     }
 
     @media (max-width: 480px) {
@@ -197,12 +196,11 @@
       .typed-text { font-size: 18px; }
       .subtitle { font-size: 16px; }
       .btn { font-size: 14px; padding: 8px 16px; }
+      .porsche { font-size: 16px; padding: 12px 24px; }
     }
   </style>
 </head>
 <body>
-
-  <canvas id="matrix"></canvas>
 
   <div id="startScreen">
     <div id="startBtn">START</div>
@@ -210,7 +208,7 @@
 
   <div id="imageBackground"></div>
 
-  <video id="bgVideo" loop autoplay>
+  <video id="bgVideo" loop autoplay muted>
     <source src="background.mp4" type="video/mp4" />
     Your browser does not support the video tag.
   </video>
@@ -222,69 +220,39 @@
     <div class="button-container">
       <button class="btn facebook" id="btn2" onclick="window.open('https://www.facebook.com/share/1ExQ7Xa1yL/', '_blank')">Facebook</button>
       <button class="btn tiktok" id="btn3" onclick="window.open('https://www.tiktok.com/@ibidare?_t=ZS-8yTVKOXfcg9&_r=1', '_blank')">TikTok</button>
+      <button class="btn porsche" id="btnPorsche">Porsche</button>
+    </div>
+    <div id="porscheGallery" style="display:none; flex-direction:column; gap:10px; margin-top:20px;">
+      <img src="p1.jpg" width="300">
+      <img src="p2.jpg" width="300">
+      <img src="p3.jpg" width="300">
     </div>
   </div>
 
   <script>
-    const canvas = document.getElementById('matrix');
-    const ctx = canvas.getContext('2d');
-    let animationFrameId;
-
-    function resize() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    resize();
-    window.addEventListener('resize', resize);
-
-    const letters = 'アァイィウヴエカキクケコサシスセソタチツナニヌネノハヒフヘホABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    const fontSize = 14;
-    const columns = Math.floor(canvas.width / fontSize);
-    const drops = Array(columns).fill(1);
-    let matrixRunning = true;
-
-    function draw() {
-      if (!matrixRunning) {
-        cancelAnimationFrame(animationFrameId);
-        return;
-      }
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      for (let i = 0; i < drops.length; i++) {
-        const text = letters.charAt(Math.floor(Math.random() * letters.length));
-        ctx.fillStyle = '#00ff00';
-        ctx.font = fontSize + 'px monospace';
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-          drops[i] = 0;
-        }
-        drops[i]++;
-      }
-
-      animationFrameId = requestAnimationFrame(draw);
-    }
-    draw();
-
     const startBtn = document.getElementById('startBtn');
     const startScreen = document.getElementById('startScreen');
     const mainOverlay = document.getElementById('mainOverlay');
     const video = document.getElementById('bgVideo');
     const btnFacebook = document.getElementById('btn2');
     const btnTikTok = document.getElementById('btn3');
+    const btnPorsche = document.getElementById('btnPorsche');
+    const porscheGallery = document.getElementById('porscheGallery');
+    const imageBackground = document.getElementById('imageBackground');
 
     startBtn.addEventListener('click', () => {
-      matrixRunning = false;
       startScreen.style.display = 'none';
-      video.muted = false;
-      video.volume = 1.0;
-      video.play();
+      imageBackground.style.backgroundImage = "url('image.jpg')"; // الصورة التي أرسلتها
       mainOverlay.classList.add('active');
       setTimeout(() => btnFacebook.classList.add('show'), 1500);
       setTimeout(() => btnTikTok.classList.add('show'), 2000);
+      setTimeout(() => btnPorsche.classList.add('show'), 2500);
+    });
+
+    btnPorsche.addEventListener('click', () => {
+      porscheGallery.style.display = "flex";
     });
   </script>
 
 </body>
-</h
+</html>
