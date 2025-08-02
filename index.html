@@ -121,11 +121,6 @@
       transform: scale(1.05);
       box-shadow: 0 0 50px red;
     }
-
-    /* الفيديو المخفي للصوت */
-    #hiddenAudio {
-      display: none;
-    }
   </style>
 </head>
 <body>
@@ -150,20 +145,16 @@
     </div>
   </div>
 
-  <!-- فيديو مخفي لتشغيل الصوت -->
-  <video id="hiddenAudio" preload="auto">
-    <source src="background.mp4" type="video/mp4" />
-  </video>
+  <audio id="bgSound">
+    <source src="sound.mp3" type="audio/mp3">
+  </audio>
 
   <script>
     function startExperience() {
       document.getElementById('startScreen').style.display = 'none';
       document.getElementById('mainOverlay').style.opacity = 1;
       document.getElementById('mainOverlay').style.pointerEvents = 'auto';
-
-      const audioVideo = document.getElementById('hiddenAudio');
-      audioVideo.volume = 1;
-      audioVideo.play();
+      document.getElementById('bgSound').play();
     }
 
     function showImages() {
