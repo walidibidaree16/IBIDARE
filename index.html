@@ -1,192 +1,204 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Matrix Start + Video Page</title>
-<style>
-  /* Reset */
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html, body {
-    height: 100%;
-    background: black;
-    overflow: hidden;
-    font-family: 'Courier New', monospace;
-  }
-
-  canvas {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    display: block;
-    z-index: 1;
-  }
-
-  /* شاشة البداية */
-  #startScreen {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10;
-  }
-
-  #startBtn {
-    font-size: 60px;
-    color: #00ff00;
-    padding: 20px 60px;
-    border: 3px solid #00ff00;
-    border-radius: 15px;
-    cursor: pointer;
-    user-select: none;
-    text-shadow:
-      0 0 10px #00ff00,
-      0 0 20px #00ff00,
-      0 0 30px #00ff00;
-    animation: glow 1.5s ease-in-out infinite alternate;
-  }
-
-  #startBtn:hover {
-    background: rgba(0,255,0,0.2);
-    box-shadow:
-      0 0 20px #00ff00,
-      0 0 40px #00ff00;
-  }
-
-  @keyframes glow {
-    from {
-      text-shadow:
-        0 0 5px #00ff00,
-        0 0 10px #00ff00;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Matrix Start + Video Page</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      height: 100%;
+      background: black;
+      overflow: hidden;
+      font-family: 'Courier New', monospace;
     }
-    to {
-      text-shadow:
-        0 0 20px #00ff00,
-        0 0 40px #00ff00,
-        0 0 60px #00ff00;
+
+    canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      display: block;
+      z-index: 1;
     }
-  }
 
-  /* الفيديو */
-  #bgVideo {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    object-fit: cover;
-    z-index: 5;
-    display: none;
-    background: black;
-  }
+    #startScreen {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+    }
 
-  /* المحتوى بعد التشغيل */
-  #mainOverlay {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    backdrop-filter: blur(5px);
-    background: rgba(0,0,0,0.5);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 120px;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 1s ease;
-    z-index: 10;
-  }
-  #mainOverlay.active {
-    opacity: 1;
-    pointer-events: auto;
-  }
+    #startBtn {
+      font-size: 60px;
+      color: #00ff00;
+      padding: 20px 60px;
+      border: 3px solid #00ff00;
+      border-radius: 15px;
+      cursor: pointer;
+      user-select: none;
+      text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00;
+      animation: glow 1.5s ease-in-out infinite alternate;
+    }
 
-  .profile-pic {
-    width: 220px;
-    height: 220px;
-    border-radius: 50%;
-    border: 4px solid #00bfff;
-    object-fit: cover;
-    margin-bottom: 30px;
-    opacity: 0.9;
-  }
+    #startBtn:hover {
+      background: rgba(0,255,0,0.2);
+      box-shadow: 0 0 20px #00ff00, 0 0 40px #00ff00;
+    }
 
-  .typed-text {
-    color: white;
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 30px;
-    text-align: center;
-    white-space: nowrap;
-    border-right: 2px solid white;
-    overflow: hidden;
-    width: 0;
-    animation: typing 3s steps(15, end) forwards, blink 0.7s step-end infinite;
-  }
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00;
+      }
+      to {
+        text-shadow: 0 0 20px #00ff00, 0 0 40px #00ff00, 0 0 60px #00ff00;
+      }
+    }
 
-  @keyframes typing {
-    from { width: 0; }
-    to { width: 190px; }
-  }
+    #imageBackground {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-image: url('Screenshot_20250802_011655.jpg');
+      background-size: cover;
+      background-position: center;
+      z-index: 4;
+    }
 
-  @keyframes blink {
-    50% { border-color: transparent; }
-  }
+    #bgVideo {
+      display: none;
+    }
 
-  .button-container {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    align-items: center;
-  }
+    #mainOverlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      backdrop-filter: blur(5px);
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 120px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 1s ease;
+      z-index: 10;
+    }
 
-  .btn {
-    padding: 12px 24px;
-    border: none;
-    border-radius: 30px;
-    font-size: 18px;
-    cursor: pointer;
-    background-color: rgba(255, 255, 255, 0.15);
-    color: white;
-    backdrop-filter: blur(3px);
-    transition: all 0.3s ease;
-    opacity: 0;
-    transform: translateY(20px);
-    pointer-events: none;
-  }
+    #mainOverlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
 
-  .btn:hover {
-    background-color: rgba(255, 255, 255, 0.3);
-  }
+    .profile-pic {
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      border: 4px solid #00bfff;
+      object-fit: cover;
+      margin-bottom: 30px;
+      opacity: 0.9;
+      box-shadow: 0 0 15px #00ff00, 0 0 30px #00ff00, 0 0 45px #00ff00;
+      animation: pulseGreen 2s infinite alternate;
+    }
 
-  .btn.show {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-  }
+    @keyframes pulseGreen {
+      from {
+        box-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
+      }
+      to {
+        box-shadow: 0 0 30px #00ff00, 0 0 60px #00ff00;
+      }
+    }
 
-  .facebook {
-    background-color: rgba(59, 89, 152, 0.6);
-  }
+    .typed-text {
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      text-align: center;
+      white-space: nowrap;
+      border-right: 2px solid white;
+      overflow: hidden;
+      width: 0;
+      animation: typing 3s steps(15, end) forwards, blink 0.7s step-end infinite;
+    }
 
-  .tiktok {
-    background-color: rgba(255, 0, 102, 0.6);
-  }
+    .subtitle {
+      color: #00ffcc;
+      font-size: 20px;
+      font-weight: normal;
+      margin-bottom: 25px;
+      text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
+    }
 
-  @media (max-width: 768px) {
-    #mainOverlay { padding-top: 100px; }
-    .profile-pic { width: 150px; height: 150px; margin-bottom: 20px; }
-    .typed-text { font-size: 20px; }
-    .btn { font-size: 16px; padding: 10px 20px; }
-  }
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 190px; }
+    }
 
-  @media (max-width: 480px) {
-    #mainOverlay { padding-top: 80px; }
-    .profile-pic { width: 120px; height: 120px; }
-    .typed-text { font-size: 18px; }
-    .btn { font-size: 14px; padding: 8px 16px; }
-  }
-</style>
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
+
+    .button-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 30px;
+      font-size: 18px;
+      cursor: pointer;
+      background-color: rgba(255, 255, 255, 0.15);
+      color: white;
+      backdrop-filter: blur(3px);
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateY(20px);
+      pointer-events: none;
+    }
+
+    .btn:hover {
+      background-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .btn.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .facebook {
+      background-color: rgba(59, 89, 152, 0.6);
+    }
+
+    .tiktok {
+      background-color: rgba(255, 0, 102, 0.6);
+    }
+
+    @media (max-width: 768px) {
+      #mainOverlay { padding-top: 100px; }
+      .profile-pic { width: 150px; height: 150px; margin-bottom: 20px; }
+      .typed-text { font-size: 20px; }
+      .subtitle { font-size: 18px; }
+      .btn { font-size: 16px; padding: 10px 20px; }
+    }
+
+    @media (max-width: 480px) {
+      #mainOverlay { padding-top: 80px; }
+      .profile-pic { width: 120px; height: 120px; }
+      .typed-text { font-size: 18px; }
+      .subtitle { font-size: 16px; }
+      .btn { font-size: 14px; padding: 8px 16px; }
+    }
+  </style>
 </head>
 <body>
 
@@ -196,7 +208,9 @@
     <div id="startBtn">START</div>
   </div>
 
-  <video id="bgVideo" loop muted playsinline>
+  <div id="imageBackground"></div>
+
+  <video id="bgVideo" loop autoplay>
     <source src="background.mp4" type="video/mp4" />
     Your browser does not support the video tag.
   </video>
@@ -204,82 +218,73 @@
   <div id="mainOverlay">
     <img src="walid.png" alt="Profile" class="profile-pic" />
     <div class="typed-text">👇🏻IBIDARE WALID 👇🏻</div>
+    <div class="subtitle">Développeur informatique</div>
     <div class="button-container">
       <button class="btn facebook" id="btn2" onclick="window.open('https://www.facebook.com/share/1ExQ7Xa1yL/', '_blank')">Facebook</button>
       <button class="btn tiktok" id="btn3" onclick="window.open('https://www.tiktok.com/@ibidare?_t=ZS-8yTVKOXfcg9&_r=1', '_blank')">TikTok</button>
     </div>
   </div>
 
-<script>
-  const canvas = document.getElementById('matrix');
-  const ctx = canvas.getContext('2d');
-  let animationFrameId;
+  <script>
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
+    let animationFrameId;
 
-  function resize() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
-  resize();
-  window.addEventListener('resize', resize);
-
-  const letters = 'アァイィウヴエカキクケコサシスセソタチツナニヌネノハヒフヘホABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  const fontSize = 14;
-  const columns = Math.floor(canvas.width / fontSize);
-  const drops = Array(columns).fill(1);
-  let matrixRunning = true;
-
-  function draw() {
-    if (!matrixRunning) {
-      cancelAnimationFrame(animationFrameId);
-      return;
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     }
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    resize();
+    window.addEventListener('resize', resize);
 
-    for (let i = 0; i < drops.length; i++) {
-      const text = letters.charAt(Math.floor(Math.random() * letters.length));
-      ctx.fillStyle = '#00ff00';
-      ctx.font = fontSize + 'px monospace';
-      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+    const letters = 'アァイィウヴエカキクケコサシスセソタチツナニヌネノハヒフヘホABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    const fontSize = 14;
+    const columns = Math.floor(canvas.width / fontSize);
+    const drops = Array(columns).fill(1);
+    let matrixRunning = true;
 
-      if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-        drops[i] = 0;
+    function draw() {
+      if (!matrixRunning) {
+        cancelAnimationFrame(animationFrameId);
+        return;
       }
-      drops[i]++;
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters.charAt(Math.floor(Math.random() * letters.length));
+        ctx.fillStyle = '#00ff00';
+        ctx.font = fontSize + 'px monospace';
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+
+      animationFrameId = requestAnimationFrame(draw);
     }
+    draw();
 
-    animationFrameId = requestAnimationFrame(draw);
-  }
-  draw();
+    const startBtn = document.getElementById('startBtn');
+    const startScreen = document.getElementById('startScreen');
+    const mainOverlay = document.getElementById('mainOverlay');
+    const video = document.getElementById('bgVideo');
+    const btnFacebook = document.getElementById('btn2');
+    const btnTikTok = document.getElementById('btn3');
 
-  const startBtn = document.getElementById('startBtn');
-  const startScreen = document.getElementById('startScreen');
-  const mainOverlay = document.getElementById('mainOverlay');
-  const video = document.getElementById('bgVideo');
-  const btnFacebook = document.getElementById('btn2');
-  const btnTikTok = document.getElementById('btn3');
-
-  startBtn.addEventListener('click', () => {
-    // توقف الماتريكس
-    matrixRunning = false;
-
-    // أخفي شاشة البداية
-    startScreen.style.display = 'none';
-
-    // عرض الفيديو و تشغيله مع الصوت
-    video.style.display = 'block';
-    video.muted = false;
-    video.volume = 1.0;
-    video.play();
-
-    // إظهار المحتوى (الصورة والأزرار)
-    mainOverlay.classList.add('active');
-
-    // عرض الأزرار تدريجياً
-    setTimeout(() => btnFacebook.classList.add('show'), 1500);
-    setTimeout(() => btnTikTok.classList.add('show'), 2000);
-  });
-</script>
+    startBtn.addEventListener('click', () => {
+      matrixRunning = false;
+      startScreen.style.display = 'none';
+      video.muted = false;
+      video.volume = 1.0;
+      video.play();
+      mainOverlay.classList.add('active');
+      setTimeout(() => btnFacebook.classList.add('show'), 1500);
+      setTimeout(() => btnTikTok.classList.add('show'), 2000);
+    });
+  </script>
 
 </body>
-</html>
+</h
