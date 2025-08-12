@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title></title>Ibidare Walid</title>
+  <title>Ibidare Walid</title>
   <style>
     * {
       margin: 0; padding: 0; box-sizing: border-box;
@@ -75,25 +75,49 @@
     }
     .link-btn {
       display: block;
-      background-color: rgba(0, 255, 0, 0.2);
-      border: 2px solid #00ff00;
-      color: #00ff00;
+      color: white;
       text-decoration: none;
       font-size: 18px;
       padding: 14px 0;
       border-radius: 30px;
       font-weight: bold;
       transition: all 0.3s ease;
-      box-shadow: 0 0 10px #00ff00;
       user-select: none;
+      box-shadow: 0 0 10px;
+      border: 2px solid;
     }
-    .link-btn:hover {
-      background-color: #00ff00;
+    .link-instagram {
+      background-color: #bfa540;
+      border-color: #bfa540;
+      box-shadow: 0 0 10px #bfa540;
+    }
+    .link-instagram:hover {
+      background-color: #d9c564;
+      box-shadow: 0 0 20px #d9c564;
       color: black;
-      box-shadow: 0 0 20px #00ff00;
     }
-    /* معرض فيديوهات */
-    .video-gallery {
+    .link-facebook {
+      background-color: #3b5998;
+      border-color: #3b5998;
+      box-shadow: 0 0 10px #3b5998;
+    }
+    .link-facebook:hover {
+      background-color: #627aad;
+      box-shadow: 0 0 20px #627aad;
+      color: white;
+    }
+    .link-tiktok {
+      background-color: #ff0000;
+      border-color: #ff0000;
+      box-shadow: 0 0 10px #ff0000;
+    }
+    .link-tiktok:hover {
+      background-color: #ff4d4d;
+      box-shadow: 0 0 20px #ff4d4d;
+      color: white;
+    }
+    /* معرض صور بورشه */
+    .porsche-gallery {
       margin-top: 40px;
       display: flex;
       justify-content: center;
@@ -102,14 +126,14 @@
       max-width: 900px;
       width: 100%;
     }
-    .video-gallery video {
+    .porsche-gallery img {
       width: 280px;
       border-radius: 15px;
       box-shadow: 0 0 20px #00ff00;
       cursor: pointer;
       transition: transform 0.3s ease;
     }
-    .video-gallery video:hover {
+    .porsche-gallery img:hover {
       transform: scale(1.05);
     }
     /* Responsive */
@@ -118,12 +142,12 @@
       .name { font-size: 24px; }
       .subtitle { font-size: 16px; }
       .link-btn { font-size: 16px; }
-      .video-gallery video { width: 45vw; }
+      .porsche-gallery img { width: 45vw; }
     }
     @media (max-width: 480px) {
       .profile-pic { width: 120px; height: 120px; }
-      .video-gallery { flex-direction: column; gap: 15px; }
-      .video-gallery video { width: 90vw; }
+      .porsche-gallery { flex-direction: column; gap: 15px; }
+      .porsche-gallery img { width: 90vw; }
     }
   </style>
 </head>
@@ -143,24 +167,19 @@
   <div class="name">Ibidare Walid</div>
   <div class="subtitle">Développeur informatique</div>
 
-  <!-- روابط التواصل -->
+  <!-- روابط -->
   <div class="links">
-    <a href="https://www.facebook.com/share/1ExQ7Xa1yL/" class="link-btn" target="_blank" rel="noopener noreferrer">Facebook</a>
-    <a href="https://www.tiktok.com/@ibidare?_t=ZS-8yTVKOXfcg9&_r=1" class="link-btn" target="_blank" rel="noopener noreferrer">TikTok</a>
-    <a href="https://www.instagram.com/yourusername" class="link-btn" target="_blank" rel="noopener noreferrer">Instagram</a>
-    <a href="https://www.youtube.com/c/yourchannel" class="link-btn" target="_blank" rel="noopener noreferrer">YouTube</a>
-    <a href="https://open.spotify.com/artist/yourartistid" class="link-btn" target="_blank" rel="noopener noreferrer">Spotify</a>
-    <a href="https://music.apple.com/artist/yourartistid" class="link-btn" target="_blank" rel="noopener noreferrer">Apple Music</a>
-    <a href="https://yourstore.com" class="link-btn" target="_blank" rel="noopener noreferrer">متجري الإلكتروني</a>
+    <a href="https://www.instagram.com/yourusername" class="link-btn link-instagram" target="_blank" rel="noopener noreferrer">Instagram</a>
+    <a href="https://www.facebook.com/share/1ExQ7Xa1yL/" class="link-btn link-facebook" target="_blank" rel="noopener noreferrer">Facebook</a>
+    <a href="https://www.tiktok.com/@ibidare?_t=ZS-8yTVKOXfcg9&_r=1" class="link-btn link-tiktok" target="_blank" rel="noopener noreferrer">TikTok</a>
   </div>
 
-  <!-- معرض فيديوهات -->
-  <div class="video-gallery">
-    <video src="video1.mp4" controls muted playsinline></video>
-    <video src="video2.mp4" controls muted playsinline></video>
-    <video src="video3.mp4" controls muted playsinline></video>
+  <!-- معرض صور بورشه -->
+  <div class="porsche-gallery">
+    <img src="p1.jpg" alt="Porsche 1" />
+    <img src="p2.jpg" alt="Porsche 2" />
+    <img src="p3.jpg" alt="Porsche 3" />
   </div>
 
 </body>
 </html>
-
